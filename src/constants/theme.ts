@@ -7,6 +7,7 @@ export const colors = {
   border: '#FFF',
   primaryText: '#E7E9F4',
   linkText: '#53B1FD',
+  cardBackground: '#212327',
 
   // variant colors
   success: '#0D833E',
@@ -15,4 +16,11 @@ export const colors = {
   caution: '#DB7100',
   danger: '#CD3434',
   disabled: '#544D61',
+};
+
+export const transitions = {
+  fastest: '100ms ease-in-out',
+  fast: '150ms ease-in-out',
+  medium: '200ms ease-in-out',
+  long: '500ms ease-in-out',
 };

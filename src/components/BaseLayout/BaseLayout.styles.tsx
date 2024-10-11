@@ -6,11 +6,12 @@ export const Main = styled.main`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  padding: 16px;
 `;
 
 export const ContentWrapper = styled.div`
+  width: 100%;
   height: 100vh;
-  padding: 20px;
   flex: 1 1 0%;
   margin: 0px auto;
 
