@@ -24,7 +24,7 @@ export const ContentWrapper = styled.div`
 export const FooterWrapper = styled.footer`
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
   padding: 0 8px;
   height: 50px;
 `;
