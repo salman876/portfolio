@@ -34,11 +34,7 @@ module.exports = {
     'import/order': [
       'error',
       {
-        groups: [
-          ['builtin', 'external'],
-          ['internal', 'parent', 'sibling', 'index', 'object', 'type'],
-        ],
-        'newlines-between': 'always-and-inside-groups',
+        groups: ['type'],
       },
     ],
     'jsx-a11y/no-autofocus': 'off',
