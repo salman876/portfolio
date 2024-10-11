@@ -2,20 +2,21 @@ import styled from '@emotion/styled';
 
 import { breakpoints } from 'constants/theme';
 
-export const BalanceWrapper = styled.div`
+import { TextField } from 'components/TextField';
+
+export const MainWrapper = styled.div`
+  margin: 0 auto;
+
+  ${breakpoints.medium} {
+    width: 50%;
+  }
+`;
+
+export const FlexWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: 16px;
-`;
-
-export const MainWrapper = styled.div`
-  display: grid;
-
-  ${breakpoints.medium} {
-    grid-template-columns: 2fr 1fr;
-    column-gap: 40px;
-  }
 `;
 
 export const BalanceAmount = styled.p`
@@ -28,4 +29,12 @@ export const BalanceLabel = styled.p`
   line-height: 14px;
   text-align: right;
   opacity: 0.7;
+`;
+
+export const SearchField = styled(TextField)`
+  width: 100%;
+
+  ${breakpoints.medium} {
+    width: 50%;
+  }
 `;

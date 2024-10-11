@@ -8,6 +8,7 @@ export const colors = {
   primaryText: '#E7E9F4',
   linkText: '#53B1FD',
   cardBackground: '#212327',
+  label: '#FFFFFF78',
 
   // variant colors
   success: '#0D833E',

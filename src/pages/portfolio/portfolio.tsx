@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 
 import { Asset } from 'types/asset';
 
@@ -6,9 +6,9 @@ import { formatUSD } from 'utils/formatUSD';
 
 import { AssetCard } from 'components/AssetCard';
 
-import { BalanceAmount, BalanceLabel, BalanceWrapper, MainWrapper } from './portfolio.styles';
+import { BalanceAmount, BalanceLabel, FlexWrapper, MainWrapper, SearchField } from './portfolio.styles';
 
-const assets: Asset[] = [
+const ASSETS: Asset[] = [
   {
     name: 'Bitcoin',
     symbol: 'btc',
@@ -40,29 +40,38 @@ const assets: Asset[] = [
 ];
 
 export const Portfolio: FC = () => {
+  const [assets, setAssets] = useState<Asset[]>(ASSETS);
+
+  const handleSearch = (searchTerm: string) => {
+    if (!searchTerm) {
+      setAssets(ASSETS);
+      return;
+    }
+
+    setAssets(assets.filter(asset => asset.name.toLowerCase().includes(searchTerm.toLowerCase())));
+  };
+
   const handleAssetClick = (asset: Asset) => console.log(asset);
 
-  const totalBalance = useMemo(() => assets.reduce((sum, asset) => sum + asset.amount * asset.price, 0), []);
+  const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.price, 0), []);
 
   return (
     <MainWrapper>
-      <div>
-        <BalanceWrapper>
-          <h1>My Portfolio</h1>
-          <div>
-            <BalanceAmount>{formatUSD(totalBalance)}</BalanceAmount>
-            <BalanceLabel>Balance</BalanceLabel>
-          </div>
-        </BalanceWrapper>
-        {assets.map(asset => (
-          <AssetCard key={asset.symbol} asset={asset} onClick={handleAssetClick} />
-        ))}
-      </div>
-      <div>
-        {assets.map(asset => (
-          <AssetCard key={asset.symbol} asset={asset} onClick={handleAssetClick} />
-        ))}
-      </div>
+      <FlexWrapper>
+        <h1>My Portfolio</h1>
+        <div>
+          <BalanceAmount>{formatUSD(totalBalance)}</BalanceAmount>
+          <BalanceLabel>Balance</BalanceLabel>
+        </div>
+      </FlexWrapper>
+      <FlexWrapper>
+        <SearchField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
+      </FlexWrapper>
+      {assets.length > 0 ? (
+        assets.map(asset => <AssetCard key={asset.symbol} asset={asset} onClick={handleAssetClick} />)
+      ) : (
+        <p>No assets found.</p>
+      )}
     </MainWrapper>
   );
 };

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { breakpoints, colors } from 'constants/theme';
 
 export const Main = styled.main`
-  height: 100vh;
+  height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   padding: 16px;
