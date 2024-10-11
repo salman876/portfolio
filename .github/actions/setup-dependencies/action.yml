@@ -1,0 +1,17 @@
+name: 'Setup dependencies'
+description: 'A support action to set up project dependencies'
+outputs:
+  cache-hit:
+    value: ${{ steps.setup-node.outputs.cache-hit }}
+    description: 'A boolean value to indicate if a cache was hit'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v3
+      id: setup-node
+      with:
+        node-version: '20.x'
+        cache: 'yarn'
+    - name: Install modules
+      shell: bash
+      run: yarn  install --frozen-lockfile

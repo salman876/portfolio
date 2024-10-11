@@ -1,0 +1,58 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    name: 'Setup'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-dependencies
+        name: 'Setup dependencies'
+  eslint:
+    name: 'Eslint check'
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-dependencies
+        name: 'Setup dependencies'
+      - run: yarn eslint:ci
+  format:
+    name: 'Code format check'
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-dependencies
+        name: 'Setup dependencies'
+      - run: yarn format:ci
+  types:
+    name: 'Type check'
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-dependencies
+        name: 'Setup dependencies'
+      - run: yarn checktypes
+  imports:
+    name: 'Imports check'
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-dependencies
+        name: 'Setup dependencies'
+      - run: yarn checkimports
