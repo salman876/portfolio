@@ -1,13 +1,40 @@
 import styled from '@emotion/styled';
 
-export const Button = styled.button`
-  padding: 32px;
-  background-color: hotpink;
-  font-size: 24px;
-  border-radius: 4px;
-  color: black;
-  font-weight: bold;
-  &:hover {
-    color: white;
+import { breakpoints } from 'constants/theme';
+
+import { TextField } from 'components/TextField';
+
+export const MainWrapper = styled.div`
+  margin: 0 auto;
+
+  ${breakpoints.medium} {
+    width: 50%;
+  }
+`;
+
+export const FlexWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+`;
+
+export const BalanceAmount = styled.p`
+  font-family: monospace;
+  font-size: 32px;
+`;
+
+export const BalanceLabel = styled.p`
+  font-size: 14px;
+  line-height: 14px;
+  text-align: right;
+  opacity: 0.7;
+`;
+
+export const SearchField = styled(TextField)`
+  width: 100%;
+
+  ${breakpoints.medium} {
+    width: 50%;
   }
 `;
