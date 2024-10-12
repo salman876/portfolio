@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { colors } from 'constants/theme';
 
-export const Button = styled.button`
+export const CustomButton = styled.button`
   width: 100%;
   height: 60px;
   background: ${colors.primary};
@@ -23,4 +23,8 @@ export const Button = styled.button`
   :active {
     background: ${colors.primaryLight};
   }
+`;
+
+export const ButtonLoader = styled.img`
+  margin: 0 auto;
 `;

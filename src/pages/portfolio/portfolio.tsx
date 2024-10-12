@@ -4,10 +4,12 @@ import { Asset } from 'types/asset';
 
 import { formatUSD } from 'utils/formatUSD';
 
+import { AssetModal } from 'components/AssetModal';
 import { AssetTable } from 'components/AssetTable';
-import { TextField } from 'components/TextField';
+import { Button } from 'components/ui/Button';
+import { TextField } from 'components/ui/TextField';
 
-import { AddButton, BalanceAmount, BalanceLabel, FlexWrapper, MainWrapper } from './portfolio.styles';
+import { BalanceAmount, BalanceLabel, ButtonWrapper, FlexWrapper, MainWrapper } from './portfolio.styles';
 
 const ASSETS: Asset[] = [
   {
@@ -42,6 +44,10 @@ const ASSETS: Asset[] = [
 
 export const Portfolio: FC = () => {
   const [assets, setAssets] = useState<Asset[]>(ASSETS);
+  const [assetModal, setAssetModal] = useState<{ show: boolean; type: 'add' | 'release' }>({
+    show: false,
+    type: 'add',
+  });
 
   const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.price, 0), []);
 
@@ -56,6 +62,10 @@ export const Portfolio: FC = () => {
 
   const handleAssetClick = (asset: Asset) => console.log(asset.name);
 
+  const handleAssetManageClick = (type: 'add' | 'release') => setAssetModal({ show: true, type });
+
+  const handleAssetModalClose = () => setAssetModal({ ...assetModal, show: false });
+
   return (
     <MainWrapper>
       <FlexWrapper>
@@ -67,9 +77,12 @@ export const Portfolio: FC = () => {
       </FlexWrapper>
       <FlexWrapper>
         <TextField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
-        <AddButton>+ Add Holding</AddButton>
+        <ButtonWrapper>
+          <Button onClick={() => handleAssetManageClick('add')}>Manage Holdings</Button>
+        </ButtonWrapper>
       </FlexWrapper>
       {assets.length > 0 ? <AssetTable assets={assets} onRowClick={handleAssetClick} /> : <p>No assets found.</p>}
+      {assetModal.show && <AssetModal type={assetModal.type} onClose={handleAssetModalClose} />}
     </MainWrapper>
   );
 };

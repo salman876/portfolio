@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 
 import { breakpoints } from 'constants/theme';
 
-import { Button } from 'components/Button';
-
 export const MainWrapper = styled.div`
   margin: 0 auto;
 
@@ -32,6 +30,7 @@ export const BalanceLabel = styled.p`
   opacity: 0.7;
 `;
 
-export const AddButton = styled(Button)`
+export const ButtonWrapper = styled.div`
+  width: 100%;
   flex-shrink: 2;
 `;
