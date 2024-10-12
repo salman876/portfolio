@@ -35,3 +35,4 @@ yarn preview
 ## Nice to haves
 - Sentry error reporting
 - GA4 analytics
+- i18n with i18n-next

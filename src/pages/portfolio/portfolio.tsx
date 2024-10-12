@@ -1,7 +1,8 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Asset } from 'types/asset';
+import { Coin } from 'types/coin';
 
 import { attachRequestCancellation } from 'utils/attachRequestCancellation';
 import { formatUSD } from 'utils/formatUSD';
@@ -26,7 +27,7 @@ import {
 } from './portfolio.styles';
 
 export const Portfolio: FC = () => {
-  const [storedAssets] = useAssetsContext();
+  const [storedAssets, setStoredAssets] = useAssetsContext();
 
   const [filteredAssets, setFilteredAssets] = useState<Asset[]>(storedAssets);
   const [assetModal, setAssetModal] = useState<{ show: boolean; type: 'deposit' | 'withdrawal' }>({
@@ -38,10 +39,6 @@ export const Portfolio: FC = () => {
     () => storedAssets.reduce((sum, asset) => sum + asset.amount * asset.current_price, 0),
     [storedAssets],
   );
-
-  useEffect(() => {
-    setFilteredAssets(storedAssets);
-  }, [storedAssets]);
 
   const handleSearch = (searchTerm: string) => {
     if (!searchTerm) {
@@ -69,8 +66,31 @@ export const Portfolio: FC = () => {
     queryFn: attachRequestCancellation(cancelToken => fetchCoinMarkets(cancelToken, 'usd')),
     placeholderData: keepPreviousData,
     retry: false,
-    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000,
+    refetchInterval: 60 * 1000,
   });
+
+  const updateAssets = useCallback(
+    (data: Coin[]) => {
+      setStoredAssets(prevAssets =>
+        prevAssets.map(asset => {
+          const updatedCoin = data.find(coin => coin.id === asset.id);
+          return updatedCoin ? { ...asset, current_price: updatedCoin.current_price } : asset;
+        }),
+      );
+    },
+    [setStoredAssets],
+  );
+
+  useEffect(() => {
+    if (dataQuery.status === 'success' && dataQuery.data) {
+      updateAssets(dataQuery.data);
+    }
+  }, [dataQuery.status, dataQuery.data, updateAssets]);
+
+  useEffect(() => {
+    setFilteredAssets(storedAssets);
+  }, [storedAssets]);
 
   return (
     <MainWrapper>
