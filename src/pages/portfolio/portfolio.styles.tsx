@@ -30,6 +30,11 @@ export const BalanceLabel = styled.p`
   opacity: 0.7;
 `;
 
+export const SearchWrapper = styled.div`
+  width: 100%;
+  flex-grow: 2;
+`;
+
 export const ButtonWrapper = styled.div`
   width: 100%;
   flex-shrink: 2;

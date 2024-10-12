@@ -3,8 +3,12 @@ export const breakpoints = {
 };
 
 export const colors = {
-  // general colors
-  border: '#FFF',
+  background: '#000',
+
+  border: '#FFFFFF21',
+  borderDark: '#00000017',
+  borderActive: '#FFFFFF57',
+
   primaryText: '#E7E9F4',
   linkText: '#53B1FD',
   cardBackground: '#212327',
@@ -26,4 +30,9 @@ export const transitions = {
   fast: '150ms ease-in-out',
   medium: '200ms ease-in-out',
   long: '500ms ease-in-out',
+};
+
+export const shadows = {
+  light: '0px 2px 16px rgba(0, 0, 0, 0.04)',
+  dark: '0px 4px 16px rgba(0, 0, 0, 0.08)',
 };

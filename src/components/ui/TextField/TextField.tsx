@@ -1,16 +1,20 @@
-import { FC, InputHTMLAttributes } from 'react';
+import { FC, InputHTMLAttributes, ReactNode } from 'react';
 
-import { Input, Label, Wrapper } from './TextField.styles';
+import { Input, InputWrapper, Label, PostfixWrapper } from './TextField.styles';
 
 interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  postfix?: ReactNode;
 }
 
-export const TextField: FC<TextFieldProps> = ({ label, ...props }) => {
+export const TextField: FC<TextFieldProps> = ({ label, postfix, ...props }) => {
   return (
-    <Wrapper>
+    <>
       {label && <Label>{label}</Label>}
-      <Input {...props} />
-    </Wrapper>
+      <InputWrapper>
+        <Input {...props} />
+        {postfix && <PostfixWrapper>{postfix}</PostfixWrapper>}
+      </InputWrapper>
+    </>
   );
 };

@@ -1,44 +1,59 @@
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { FC, useMemo, useState } from 'react';
 
 import { Asset } from 'types/asset';
 
+import { attachRequestCancellation } from 'utils/attachRequestCancellation';
 import { formatUSD } from 'utils/formatUSD';
+
+import { fetchCoinMarkets } from 'api/coingecko';
 
 import { AssetModal } from 'components/AssetModal';
 import { AssetTable } from 'components/AssetTable';
 import { Button } from 'components/ui/Button';
 import { TextField } from 'components/ui/TextField';
 
-import { BalanceAmount, BalanceLabel, ButtonWrapper, FlexWrapper, MainWrapper } from './portfolio.styles';
+import {
+  BalanceAmount,
+  BalanceLabel,
+  ButtonWrapper,
+  FlexWrapper,
+  MainWrapper,
+  SearchWrapper,
+} from './portfolio.styles';
 
 const ASSETS: Asset[] = [
   {
+    id: 'bitcoin',
     name: 'Bitcoin',
     symbol: 'btc',
-    icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=035',
+    image: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=035',
     amount: 2,
-    price: 63000,
+    current_price: 63000,
   },
   {
+    id: 'ethereum',
     name: 'Ethereum',
     symbol: 'eth',
-    icon: 'https://cryptologos.cc/logos/versions/ethereum-eth-logo-diamond-purple.svg?v=035',
+    image: 'https://cryptologos.cc/logos/versions/ethereum-eth-logo-diamond-purple.svg?v=035',
     amount: 22,
-    price: 2410.8,
+    current_price: 2410.8,
   },
   {
+    id: 'tether',
     name: 'Tether',
     symbol: 'usdt',
-    icon: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=035',
+    image: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=035',
     amount: 49,
-    price: 1,
+    current_price: 1,
   },
   {
+    id: 'litecoin',
     name: 'Litecoin',
     symbol: 'ltc',
-    icon: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png?v=035',
+    image: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png?v=035',
     amount: 10,
-    price: 65.11,
+    current_price: 65.11,
   },
 ];
 
@@ -49,7 +64,7 @@ export const Portfolio: FC = () => {
     type: 'add',
   });
 
-  const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.price, 0), []);
+  const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.current_price, 0), []);
 
   const handleSearch = (searchTerm: string) => {
     if (!searchTerm) {
@@ -66,6 +81,14 @@ export const Portfolio: FC = () => {
 
   const handleAssetModalClose = () => setAssetModal({ ...assetModal, show: false });
 
+  const dataQuery = useQuery({
+    queryKey: ['coins'],
+    queryFn: attachRequestCancellation(cancelToken => fetchCoinMarkets(cancelToken, 'usd')),
+    placeholderData: keepPreviousData,
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
   return (
     <MainWrapper>
       <FlexWrapper>
@@ -76,13 +99,19 @@ export const Portfolio: FC = () => {
         </div>
       </FlexWrapper>
       <FlexWrapper>
-        <TextField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
+        <SearchWrapper>
+          <TextField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
+        </SearchWrapper>
         <ButtonWrapper>
-          <Button onClick={() => handleAssetManageClick('add')}>Manage Holdings</Button>
+          <Button onClick={() => handleAssetManageClick('add')} isProcessing={dataQuery.isPending}>
+            Manage Holdings
+          </Button>
         </ButtonWrapper>
       </FlexWrapper>
       {assets.length > 0 ? <AssetTable assets={assets} onRowClick={handleAssetClick} /> : <p>No assets found.</p>}
-      {assetModal.show && <AssetModal type={assetModal.type} onClose={handleAssetModalClose} />}
+      {assetModal.show && dataQuery.data && (
+        <AssetModal coins={dataQuery.data} type={assetModal.type} onClose={handleAssetModalClose} />
+      )}
     </MainWrapper>
   );
 };

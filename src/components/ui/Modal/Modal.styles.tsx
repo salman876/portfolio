@@ -8,7 +8,7 @@ export const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.09);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +16,8 @@ export const Overlay = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: ${colors.cardBackground};
+  background-color: ${colors.background};
+  border: 1px solid ${colors.border};
   padding: 20px;
   margin: 8px;
   border-radius: 4px;
@@ -30,6 +31,7 @@ export const ModalHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 export const CloseButton = styled.button`
@@ -40,8 +42,8 @@ export const CloseButton = styled.button`
   color: ${colors.primary};
   border: 1px solid ${colors.primary};
   border-radius: 50%;
-  height: 40px;
-  width: 40px;
+  height: 32px;
+  width: 32px;
 
   :hover {
     border-color: ${colors.primaryLight};

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'constants/theme';
+import { colors, transitions } from 'constants/theme';
 
 export const CustomButton = styled.button`
   width: 100%;
@@ -18,6 +18,7 @@ export const CustomButton = styled.button`
 
   :hover {
     background: ${colors.primaryLight};
+    transition: ${transitions.fast};
   }
 
   :active {
