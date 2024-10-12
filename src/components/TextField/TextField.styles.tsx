@@ -14,6 +14,7 @@ export const Label = styled.p`
 `;
 
 export const Input = styled.input`
+  width: 100%;
   height: 60px;
   padding: 0 20px;
   outline: none;

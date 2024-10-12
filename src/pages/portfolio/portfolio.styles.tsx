@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { breakpoints } from 'constants/theme';
 
-import { TextField } from 'components/TextField';
+import { Button } from 'components/Button';
 
 export const MainWrapper = styled.div`
   margin: 0 auto;
@@ -15,8 +15,9 @@ export const MainWrapper = styled.div`
 export const FlexWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+  column-gap: 20px;
 `;
 
 export const BalanceAmount = styled.p`
@@ -31,10 +32,6 @@ export const BalanceLabel = styled.p`
   opacity: 0.7;
 `;
 
-export const SearchField = styled(TextField)`
-  width: 100%;
-
-  ${breakpoints.medium} {
-    width: 50%;
-  }
+export const AddButton = styled(Button)`
+  flex-shrink: 2;
 `;

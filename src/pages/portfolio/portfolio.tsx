@@ -5,8 +5,9 @@ import { Asset } from 'types/asset';
 import { formatUSD } from 'utils/formatUSD';
 
 import { AssetTable } from 'components/AssetTable';
+import { TextField } from 'components/TextField';
 
-import { BalanceAmount, BalanceLabel, FlexWrapper, MainWrapper, SearchField } from './portfolio.styles';
+import { AddButton, BalanceAmount, BalanceLabel, FlexWrapper, MainWrapper } from './portfolio.styles';
 
 const ASSETS: Asset[] = [
   {
@@ -65,7 +66,8 @@ export const Portfolio: FC = () => {
         </div>
       </FlexWrapper>
       <FlexWrapper>
-        <SearchField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
+        <TextField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
+        <AddButton>+ Add Holding</AddButton>
       </FlexWrapper>
       {assets.length > 0 ? <AssetTable assets={assets} onRowClick={handleAssetClick} /> : <p>No assets found.</p>}
     </MainWrapper>
