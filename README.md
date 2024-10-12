@@ -9,6 +9,7 @@ A pet project written in React Vite and Typescript.
 - Uses Tanstack's React Table for table sorting and pagination. 
 - Uses React Hook Form with yup validator for forms.
 - React dom router for routing.
+- react-hot-toast for toasts.
 - vitetest for unit tests.
 - comprehensive and picky eslint rules.
 - prettier with my flavor for sorting import orders.

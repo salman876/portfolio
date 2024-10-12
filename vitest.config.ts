@@ -4,5 +4,6 @@ export default defineConfig({
   test: {
     root: 'src',
     exclude: [...configDefaults.exclude],
+    environment: 'jsdom', // needed for localStorage
   },
 });

@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 
 import { Asset } from 'types/asset';
 
@@ -7,6 +7,8 @@ import { attachRequestCancellation } from 'utils/attachRequestCancellation';
 import { formatUSD } from 'utils/formatUSD';
 
 import { fetchCoinMarkets } from 'api/coingecko';
+
+import { useAssetsContext } from 'contexts/assets';
 
 import { AssetTable } from 'components/AssetTable';
 import { AssetTabs } from 'components/AssetTabs';
@@ -23,57 +25,37 @@ import {
   SearchWrapper,
 } from './portfolio.styles';
 
-const ASSETS: Asset[] = [
-  {
-    id: 'bitcoin',
-    name: 'Bitcoin',
-    symbol: 'btc',
-    image: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=035',
-    amount: 2,
-    current_price: 63000,
-  },
-  {
-    id: 'ethereum',
-    name: 'Ethereum',
-    symbol: 'eth',
-    image: 'https://cryptologos.cc/logos/versions/ethereum-eth-logo-diamond-purple.svg?v=035',
-    amount: 22,
-    current_price: 2410.8,
-  },
-  {
-    id: 'tether',
-    name: 'Tether',
-    symbol: 'usdt',
-    image: 'https://cryptologos.cc/logos/tether-usdt-logo.png?v=035',
-    amount: 49,
-    current_price: 1,
-  },
-  {
-    id: 'litecoin',
-    name: 'Litecoin',
-    symbol: 'ltc',
-    image: 'https://cryptologos.cc/logos/litecoin-ltc-logo.png?v=035',
-    amount: 10,
-    current_price: 65.11,
-  },
-];
-
 export const Portfolio: FC = () => {
-  const [assets, setAssets] = useState<Asset[]>(ASSETS);
+  const [storedAssets] = useAssetsContext();
+
+  const [filteredAssets, setFilteredAssets] = useState<Asset[]>(storedAssets);
   const [assetModal, setAssetModal] = useState<{ show: boolean; type: 'deposit' | 'withdrawal' }>({
     show: false,
     type: 'deposit',
   });
 
-  const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.current_price, 0), []);
+  const totalBalance = useMemo(
+    () => storedAssets.reduce((sum, asset) => sum + asset.amount * asset.current_price, 0),
+    [storedAssets],
+  );
+
+  useEffect(() => {
+    setFilteredAssets(storedAssets);
+  }, [storedAssets]);
 
   const handleSearch = (searchTerm: string) => {
     if (!searchTerm) {
-      setAssets(ASSETS);
+      setFilteredAssets(storedAssets);
       return;
     }
 
-    setAssets(assets.filter(asset => asset.name.toLowerCase().includes(searchTerm.toLowerCase())));
+    setFilteredAssets(
+      storedAssets.filter(
+        asset =>
+          asset.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          asset.symbol.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    );
   };
 
   const handleAssetClick = (asset: Asset) => console.log(asset.name);
@@ -109,10 +91,18 @@ export const Portfolio: FC = () => {
           </Button>
         </ButtonWrapper>
       </FlexWrapper>
-      {assets.length > 0 ? <AssetTable assets={assets} onRowClick={handleAssetClick} /> : <p>No assets found.</p>}
+      {filteredAssets.length > 0 ? (
+        <AssetTable assets={filteredAssets} onRowClick={handleAssetClick} />
+      ) : (
+        <p>No assets found.</p>
+      )}
       {assetModal.show && dataQuery.data && (
         <Modal isOpen onClose={handleAssetModalClose} title="Manage Holdings">
-          <AssetTabs type={'deposit'} assets={ASSETS} coins={dataQuery.data} />
+          <AssetTabs
+            type={'deposit'}
+            coins={dataQuery.data}
+            onCompleteCallback={() => setAssetModal({ ...assetModal, show: false })}
+          />
         </Modal>
       )}
     </MainWrapper>

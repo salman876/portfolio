@@ -1,12 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FC, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import * as yup from 'yup';
+
+import { colors } from 'constants/theme';
 
 import { Asset } from 'types/asset';
 import { Coin } from 'types/coin';
 
 import { formatUSD } from 'utils/formatUSD';
+
+import { useAssetsContext } from 'contexts/assets';
 
 import { FormCoinSelect } from 'components/form/FormCoinSelect';
 import { FormTextField } from 'components/form/FormTextField';
@@ -18,11 +23,16 @@ import { getAssetManagementSchema } from './utils/getAssetManagementSchema';
 
 type AssetWithdrawalProps = {
   coins: Coin[];
-  assets: Asset[];
+  onCompleteCallback?: () => void;
 };
 
-export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, assets }) => {
-  const assetCoins = useMemo(() => coins.filter(coin => assets.some(asset => asset.id === coin.id)), [assets, coins]);
+export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, onCompleteCallback }) => {
+  const [storedAssets, setStoredAssets] = useAssetsContext();
+
+  const assetCoins = useMemo(
+    () => coins.filter(coin => storedAssets.some(asset => asset.id === coin.id)),
+    [coins, storedAssets],
+  );
   const schema = useMemo(() => yup.object(getAssetManagementSchema(assetCoins)).required(), [assetCoins]);
 
   const {
@@ -42,11 +52,33 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, assets }) => 
   const holdAmount = useMemo(() => {
     if (!selectedCoin) return 0;
 
-    return assets.find(asset => asset.id === selectedCoin.id)?.amount || 0;
-  }, [assets, selectedCoin]);
+    return storedAssets.find(asset => asset.id === selectedCoin.id)?.amount || 0;
+  }, [storedAssets, selectedCoin]);
 
   const onSubmit = (payload: yup.InferType<typeof schema>) => {
-    console.log(payload);
+    const updatedAssets = storedAssets
+      .map(asset => {
+        if (asset.id === payload.coin.id) {
+          const newAmount = asset.amount - payload.amount;
+          return newAmount > 0 ? { ...asset, amount: newAmount } : null;
+        }
+        return asset;
+      })
+      .filter(Boolean) as Asset[];
+
+    setStoredAssets(updatedAssets);
+    toast.success('Asset withdrawn successfully!', {
+      style: {
+        borderRadius: '4px',
+        background: colors.cardBackground,
+        color: colors.primaryText,
+        fontSize: '16px',
+        lineHeight: '26px',
+        fontWeight: '600',
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+      },
+    });
+    onCompleteCallback?.();
   };
 
   useEffect(() => {
