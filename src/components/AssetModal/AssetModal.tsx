@@ -1,16 +1,20 @@
-import { FC, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FC, useMemo } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import { Coin } from 'types/coin';
 
 import { formatUSD } from 'utils/formatUSD';
 
-import { CoinSelect } from 'components/CoinSelect';
+import { FormCoinSelect } from 'components/form/FormCoinSelect';
+import { FormTextField } from 'components/form/FormTextField';
 import { Button } from 'components/ui/Button';
 import { FieldWrapper } from 'components/ui/FieldWrapper';
 import { Modal } from 'components/ui/Modal';
-import { TextField } from 'components/ui/TextField';
 
 import { SummaryItem, SummaryTitle } from './AssetModal.styles';
+import { getAssetManagementSchema } from './utils/getAssetManagementSchema';
 
 type AssetModalProps = {
   coins: Coin[];
@@ -19,44 +23,63 @@ type AssetModalProps = {
 };
 
 export const AssetModal: FC<AssetModalProps> = ({ type, coins, onClose }) => {
-  const [selectedCoin, setSelectedCoin] = useState<Coin>();
+  const schema = useMemo(() => yup.object(getAssetManagementSchema(coins)).required(), [coins]);
 
-  const handleCoinSelect = (coin: Coin) => setSelectedCoin(coin);
+  const {
+    handleSubmit,
+    control,
+    formState: { isDirty, isValid, isSubmitting },
+    watch,
+  } = useForm<yup.InferType<typeof schema>>({
+    mode: 'onTouched',
+    resolver: yupResolver(schema),
+    defaultValues: schema.getDefault(),
+  });
+
+  const onSubmit = (payload: yup.InferType<typeof schema>) => {
+    console.log(payload);
+  };
+
+  const [selectedCoin, amount] = watch(['coin', 'amount']);
 
   return (
     <Modal isOpen onClose={onClose} title="Manage Holdings">
-      <FieldWrapper>
-        <CoinSelect label="Select coin" placeholder="Select coin" coins={coins} onSelect={handleCoinSelect} />
-      </FieldWrapper>
-      <FieldWrapper>
-        <TextField
-          label="Amount"
-          disabled={!selectedCoin}
-          placeholder={!selectedCoin ? 'Select coin first.' : '0'}
-          type="number"
-          postfix={<span>{selectedCoin?.symbol.toUpperCase()}</span>}
-        />
-      </FieldWrapper>
-      {selectedCoin && (
-        <>
-          <SummaryTitle>Summary</SummaryTitle>
-          <SummaryItem>
-            <span>{`${selectedCoin.symbol.toUpperCase()} price`}</span>
-            <span>{formatUSD(selectedCoin.current_price)}</span>
-          </SummaryItem>
-          <SummaryItem>
-            <span>Amount</span>
-            <span>{`2 ${selectedCoin.symbol.toUpperCase()}`}</span>
-          </SummaryItem>
-          <SummaryItem>
-            <span>Balance</span>
-            <span>{`${formatUSD(2 * selectedCoin.current_price)}`}</span>
-          </SummaryItem>
-        </>
-      )}
-      <Button type="submit" onClick={() => {}} isDisabled={!selectedCoin}>
-        Confirm
-      </Button>
+      <form noValidate onSubmit={handleSubmit(onSubmit)}>
+        <FieldWrapper>
+          <FormCoinSelect name="coin" control={control} label="Select coin" placeholder="Select coin" options={coins} />
+        </FieldWrapper>
+        <FieldWrapper>
+          <FormTextField
+            name="amount"
+            control={control}
+            label="Amount"
+            disabled={!selectedCoin}
+            placeholder={!selectedCoin ? 'Select coin first.' : '0'}
+            type="number"
+            postfix={<span>{selectedCoin?.symbol.toUpperCase()}</span>}
+          />
+        </FieldWrapper>
+        {selectedCoin && (
+          <>
+            <SummaryTitle>Summary</SummaryTitle>
+            <SummaryItem>
+              <span>{`${selectedCoin.symbol.toUpperCase()} price`}</span>
+              <span>{formatUSD(selectedCoin.current_price)}</span>
+            </SummaryItem>
+            <SummaryItem>
+              <span>Amount</span>
+              <span>{`${amount} ${selectedCoin.symbol.toUpperCase()}`}</span>
+            </SummaryItem>
+            <SummaryItem>
+              <span>New balance</span>
+              <span>{`${formatUSD(amount * selectedCoin.current_price)}`}</span>
+            </SummaryItem>
+          </>
+        )}
+        <Button type="submit" onClick={() => {}} isProcessing={isSubmitting} isDisabled={!isValid || !isDirty}>
+          Confirm
+        </Button>
+      </form>
     </Modal>
   );
 };

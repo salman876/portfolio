@@ -2,7 +2,7 @@ import { FC, InputHTMLAttributes, ReactNode } from 'react';
 
 import { Input, InputWrapper, Label, PostfixWrapper } from './TextField.styles';
 
-interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   postfix?: ReactNode;
 }
