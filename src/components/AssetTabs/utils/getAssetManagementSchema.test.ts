@@ -26,6 +26,11 @@ const schema = yup.object(getAssetManagementSchema(COINS)).required(),
   correctData = {
     coin: COINS[0],
     amount: 1,
+  },
+  correctDataWithHoldAmount = {
+    coin: COINS[0],
+    holdAmount: 2,
+    amount: 1,
   };
 
 describe(getAssetManagementSchema.name, () => {
@@ -55,5 +60,9 @@ describe(getAssetManagementSchema.name, () => {
 
   it('should fail when amount is invalid', () => {
     expect(schema.isValidSync({ ...correctData, amount: 0.000001 })).toBe(false);
+  });
+
+  it('should fail when hold amount is greater than amount', () => {
+    expect(schema.isValidSync({ ...correctDataWithHoldAmount, amount: 90 })).toBe(false);
   });
 });

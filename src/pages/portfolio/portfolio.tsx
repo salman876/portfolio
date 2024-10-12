@@ -8,9 +8,10 @@ import { formatUSD } from 'utils/formatUSD';
 
 import { fetchCoinMarkets } from 'api/coingecko';
 
-import { AssetModal } from 'components/AssetModal';
 import { AssetTable } from 'components/AssetTable';
+import { AssetTabs } from 'components/AssetTabs';
 import { Button } from 'components/ui/Button';
+import { Modal } from 'components/ui/Modal';
 import { TextField } from 'components/ui/TextField';
 
 import {
@@ -59,9 +60,9 @@ const ASSETS: Asset[] = [
 
 export const Portfolio: FC = () => {
   const [assets, setAssets] = useState<Asset[]>(ASSETS);
-  const [assetModal, setAssetModal] = useState<{ show: boolean; type: 'add' | 'release' }>({
+  const [assetModal, setAssetModal] = useState<{ show: boolean; type: 'deposit' | 'withdrawal' }>({
     show: false,
-    type: 'add',
+    type: 'deposit',
   });
 
   const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.current_price, 0), []);
@@ -77,7 +78,7 @@ export const Portfolio: FC = () => {
 
   const handleAssetClick = (asset: Asset) => console.log(asset.name);
 
-  const handleAssetManageClick = (type: 'add' | 'release') => setAssetModal({ show: true, type });
+  const handleAssetManageClick = (type: 'deposit' | 'withdrawal') => setAssetModal({ show: true, type });
 
   const handleAssetModalClose = () => setAssetModal({ ...assetModal, show: false });
 
@@ -103,14 +104,16 @@ export const Portfolio: FC = () => {
           <TextField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
         </SearchWrapper>
         <ButtonWrapper>
-          <Button onClick={() => handleAssetManageClick('add')} isProcessing={dataQuery.isPending}>
-            Manage Holdings
+          <Button onClick={() => handleAssetManageClick('deposit')} isProcessing={dataQuery.isPending}>
+            Manage Hodlings
           </Button>
         </ButtonWrapper>
       </FlexWrapper>
       {assets.length > 0 ? <AssetTable assets={assets} onRowClick={handleAssetClick} /> : <p>No assets found.</p>}
       {assetModal.show && dataQuery.data && (
-        <AssetModal coins={dataQuery.data} type={assetModal.type} onClose={handleAssetModalClose} />
+        <Modal isOpen onClose={handleAssetModalClose} title="Manage Holdings">
+          <AssetTabs type={'deposit'} assets={ASSETS} coins={dataQuery.data} />
+        </Modal>
       )}
     </MainWrapper>
   );

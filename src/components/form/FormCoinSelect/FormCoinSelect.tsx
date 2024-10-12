@@ -11,6 +11,8 @@ interface FormCoinSelectProps<
   name: TName;
   label?: string;
   placeholder?: string;
+  helperText?: string;
+  isError?: boolean;
   control: Control<TFieldValues>;
   options: Coin[];
 }
@@ -22,14 +24,28 @@ export const FormCoinSelect = <
   name,
   label,
   placeholder,
+  helperText,
+  isError,
   control,
   options,
   ...props
 }: FormCoinSelectProps<TFieldValues, TName>) => {
   const {
     field: { onChange, value },
+    fieldState: { error },
   } = useController<TFieldValues, TName>({ name, control });
+  const errorMessage = error?.message;
+
   return (
-    <CoinSelect {...props} value={value} label={label} placeholder={placeholder} coins={options} onSelect={onChange} />
+    <CoinSelect
+      {...props}
+      value={value}
+      label={label}
+      placeholder={placeholder}
+      coins={options}
+      onSelect={onChange}
+      helperText={errorMessage || helperText}
+      isError={Boolean(errorMessage) || isError}
+    />
   );
 };

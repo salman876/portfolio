@@ -24,7 +24,7 @@ export const ModalContent = styled.div`
   border-radius: 4px;
   max-width: 400px;
   width: 100%;
-  bottom: 20%;
+  bottom: 10%;
   position: relative;
 `;
 
@@ -32,7 +32,7 @@ export const ModalHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `;
 
 export const CloseButton = styled.button`

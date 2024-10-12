@@ -2,7 +2,7 @@ import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
 import { TextField, TextFieldProps } from 'components/ui/TextField';
 
-export interface IFormTextFieldProps<
+interface FormTextFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends TextFieldProps {
@@ -17,10 +17,13 @@ export const FormTextField = <
   name,
   control,
   ...props
-}: IFormTextFieldProps<TFieldValues, TName>): JSX.Element => {
+}: FormTextFieldProps<TFieldValues, TName>): JSX.Element => {
   const {
     field: { onBlur, onChange, value },
+    fieldState: { error },
   } = useController<TFieldValues, TName>({ name, control });
+  const errorMessage = error?.message;
+
   return (
     <TextField
       {...props}
@@ -28,11 +31,11 @@ export const FormTextField = <
       onBlur={onBlur}
       onChange={val => {
         onChange(val);
-        if (props.onChange) {
-          props.onChange(val);
-        }
+        props.onChange?.(val);
       }}
       value={value}
+      helperText={errorMessage}
+      isError={Boolean(errorMessage)}
     />
   );
 };

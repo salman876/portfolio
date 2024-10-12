@@ -5,7 +5,8 @@ A pet project written in React Vite and Typescript.
 ## Features
 
 - Uses emotion and styled components to make up the design.
-- Uses Tanstack's React Table and React Query (uses axios for data fetching).
+- Uses Tanstack's React Query (uses axios for data fetching).
+- Uses Tanstack's React Table for table sorting and pagination. 
 - Uses React Hook Form with yup validator for forms.
 - React dom router for routing.
 - vitetest for unit tests.
@@ -29,3 +30,7 @@ yarn preview
 ```
 
 ### run via Docker
+
+## Nice to haves
+- Sentry error reporting
+- GA4 analytics

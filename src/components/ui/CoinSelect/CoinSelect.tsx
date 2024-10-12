@@ -24,10 +24,20 @@ type CoinSelectProps = {
   label?: string;
   placeholder?: string;
   value?: Coin;
+  helperText?: string;
+  isError?: boolean;
   onSelect: (coin: Coin) => void;
 };
 
-export const CoinSelect: FC<CoinSelectProps> = ({ coins, label, placeholder, value, onSelect }) => {
+export const CoinSelect: FC<CoinSelectProps> = ({
+  coins,
+  label,
+  placeholder,
+  value,
+  helperText,
+  isError,
+  onSelect,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCoin, setSelectedCoin] = useState<Coin | undefined>(value);
   const [searchTerm, setSearchTerm] = useState(selectedCoin?.name || '');
@@ -74,6 +84,8 @@ export const CoinSelect: FC<CoinSelectProps> = ({ coins, label, placeholder, val
         value={searchTerm}
         onChange={handleInputChange}
         onFocus={() => setIsOpen(true)}
+        helperText={helperText}
+        isError={isError}
         postfix={
           <Chevron
             src={isOpen ? 'assets/icons/chevron-up.svg' : 'assets/icons/chevron-down.svg'}
