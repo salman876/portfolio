@@ -4,7 +4,7 @@ import { Asset } from 'types/asset';
 
 import { formatUSD } from 'utils/formatUSD';
 
-import { AssetCard } from 'components/AssetCard';
+import { AssetTable } from 'components/AssetTable';
 
 import { BalanceAmount, BalanceLabel, FlexWrapper, MainWrapper, SearchField } from './portfolio.styles';
 
@@ -42,6 +42,8 @@ const ASSETS: Asset[] = [
 export const Portfolio: FC = () => {
   const [assets, setAssets] = useState<Asset[]>(ASSETS);
 
+  const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.price, 0), []);
+
   const handleSearch = (searchTerm: string) => {
     if (!searchTerm) {
       setAssets(ASSETS);
@@ -51,9 +53,7 @@ export const Portfolio: FC = () => {
     setAssets(assets.filter(asset => asset.name.toLowerCase().includes(searchTerm.toLowerCase())));
   };
 
-  const handleAssetClick = (asset: Asset) => console.log(asset);
-
-  const totalBalance = useMemo(() => ASSETS.reduce((sum, asset) => sum + asset.amount * asset.price, 0), []);
+  const handleAssetClick = (asset: Asset) => console.log(asset.name);
 
   return (
     <MainWrapper>
@@ -67,11 +67,7 @@ export const Portfolio: FC = () => {
       <FlexWrapper>
         <SearchField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
       </FlexWrapper>
-      {assets.length > 0 ? (
-        assets.map(asset => <AssetCard key={asset.symbol} asset={asset} onClick={handleAssetClick} />)
-      ) : (
-        <p>No assets found.</p>
-      )}
+      {assets.length > 0 ? <AssetTable assets={assets} onRowClick={handleAssetClick} /> : <p>No assets found.</p>}
     </MainWrapper>
   );
 };
