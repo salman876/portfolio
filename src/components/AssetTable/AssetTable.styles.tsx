@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors, transitions } from 'constants/theme';
+import { breakpoints, colors, transitions } from 'constants/theme';
 
 export const Table = styled.table`
   width: 100%;
@@ -8,6 +8,10 @@ export const Table = styled.table`
   overflow: hidden;
   border-collapse: separate;
   border-spacing: 0 8px;
+
+  ${breakpoints.medium} {
+    table-layout: fixed; // avoids content jump when cell width changes.
+  }
 
   tr {
     color: ${colors.primaryText};
@@ -57,7 +61,7 @@ export const TableHeaderCell = styled.div`
 export const NameWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 16px;
 `;
 
 export const Icon = styled.img`

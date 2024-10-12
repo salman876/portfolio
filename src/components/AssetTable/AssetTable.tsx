@@ -18,10 +18,10 @@ const columns = [
   columnHelper.accessor('name', {
     header: () => 'Asset',
     cell: ({ row }) => {
-      const { icon, name } = row.original;
+      const { image, name } = row.original;
       return (
         <NameWrapper>
-          <Icon src={icon} alt={name} />
+          <Icon src={image} alt={name} />
           <Property>{name}</Property>
         </NameWrapper>
       );
@@ -34,11 +34,11 @@ const columns = [
       return <Property>{`${amount} ${symbol.toUpperCase()}`}</Property>;
     },
   }),
-  columnHelper.accessor('price', {
+  columnHelper.accessor('current_price', {
     header: () => 'Price',
     cell: info => <Property>{formatUSD(info.getValue())}</Property>,
   }),
-  columnHelper.accessor(row => row.price * row.amount, {
+  columnHelper.accessor(row => row.current_price * row.amount, {
     id: 'value',
     header: () => 'Value',
     cell: info => <Property>{formatUSD(info.getValue())}</Property>,

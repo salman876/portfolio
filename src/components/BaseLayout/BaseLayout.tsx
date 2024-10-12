@@ -11,7 +11,10 @@ export const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
     <Main>
       <ContentWrapper>{children}</ContentWrapper>
       <FooterWrapper>
-        <Copyright>{`Copyright ${new Date().getFullYear()}. All rights reserved.`}</Copyright>
+        <Copyright>
+          By <a href="https://www.linkedin.com/in/salman-quraishi/">Salman Q</a> &nbsp; | &nbsp;
+          {`Copyright? © ${new Date().getFullYear()}`}
+        </Copyright>
       </FooterWrapper>
     </Main>
   );

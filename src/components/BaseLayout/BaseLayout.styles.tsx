@@ -27,10 +27,11 @@ export const FooterWrapper = styled.footer`
   justify-content: center;
   padding: 0 8px;
   height: 50px;
+  background: ${colors.background};
 `;
 
 export const Copyright = styled.p`
-  font-size: 14px;
-  line-height: 26px;
+  font-size: 12px;
+  line-height: 14px;
   color: ${colors.primaryText};
 `;
