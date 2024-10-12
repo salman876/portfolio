@@ -12,7 +12,7 @@ export const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
       <ContentWrapper>{children}</ContentWrapper>
       <FooterWrapper>
         <Copyright>
-          By &nbsp; <a href="https://www.linkedin.com/in/salman-quraishi/">Salman Q</a> &nbsp; | &nbsp;
+          By <a href="https://www.linkedin.com/in/salman-quraishi/">Salman Q</a> &nbsp; | &nbsp;
           {`Copyright? © ${new Date().getFullYear()}`}
         </Copyright>
       </FooterWrapper>
