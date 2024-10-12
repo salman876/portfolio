@@ -37,6 +37,10 @@ export const Input = styled.input`
   :focus {
     border: 1px solid ${colors.borderActive};
   }
+
+  :disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export const PostfixWrapper = styled.div`

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors, transitions } from 'constants/theme';
+import { breakpoints, colors, transitions } from 'constants/theme';
 
 export const Table = styled.table`
   width: 100%;
@@ -8,7 +8,10 @@ export const Table = styled.table`
   overflow: hidden;
   border-collapse: separate;
   border-spacing: 0 8px;
-  table-layout: fixed; // avoids content jump when cell width changes.
+
+  ${breakpoints.medium} {
+    table-layout: fixed; // avoids content jump when cell width changes.
+  }
 
   tr {
     color: ${colors.primaryText};

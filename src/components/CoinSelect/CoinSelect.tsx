@@ -23,12 +23,15 @@ type CoinSelectProps = {
   coins: Coin[];
   label?: string;
   placeholder?: string;
+  value?: Coin;
   onSelect: (coin: Coin) => void;
 };
 
-export const CoinSelect: FC<CoinSelectProps> = ({ coins, label, placeholder, onSelect }) => {
+export const CoinSelect: FC<CoinSelectProps> = ({ coins, label, placeholder, value, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCoin, setSelectedCoin] = useState<Coin | undefined>(value);
+  const [searchTerm, setSearchTerm] = useState(selectedCoin?.name || '');
+
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const filteredCoins = coins.filter(
@@ -36,6 +39,18 @@ export const CoinSelect: FC<CoinSelectProps> = ({ coins, label, placeholder, onS
       coin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       coin.symbol.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setIsOpen(true);
+  };
+
+  const handleCoinSelect = (coin: Coin) => {
+    setSelectedCoin(coin);
+    setSearchTerm(coin.name);
+    setIsOpen(false);
+    onSelect(coin);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -50,20 +65,10 @@ export const CoinSelect: FC<CoinSelectProps> = ({ coins, label, placeholder, onS
     };
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    setIsOpen(true);
-  };
-
-  const handleCoinSelect = (coin: Coin) => {
-    setSearchTerm(coin.name);
-    setIsOpen(false);
-    onSelect(coin);
-  };
-
   return (
     <Wrapper ref={wrapperRef}>
       <TextField
+        autoComplete="coins"
         label={label}
         placeholder={placeholder}
         value={searchTerm}

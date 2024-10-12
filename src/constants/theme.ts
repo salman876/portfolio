@@ -20,7 +20,7 @@ export const colors = {
   warning: '#EA973D',
   caution: '#DB7100',
   danger: '#CD3434',
-  disabled: '#544D61',
+  disabled: '#FFFFFF36',
   primary: '#2E90FA',
   primaryLight: '#53B1FD',
 };

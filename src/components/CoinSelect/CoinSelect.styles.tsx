@@ -16,7 +16,7 @@ export const DropdownList = styled.div`
   background-color: ${colors.cardBackground};
   border: 1px solid ${colors.borderDark};
   border-radius: 4px;
-  box-shadow: ${shadows.light};
+  box-shadow: ${shadows.dark};
   max-height: 300px;
   overflow-y: auto;
 
@@ -54,8 +54,8 @@ export const CoinIcon = styled.img`
 `;
 
 export const CoinName = styled.p`
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 14px;
   font-weight: 500;
 `;
 
@@ -67,15 +67,15 @@ export const CoinSymbol = styled.span`
 
 export const CoinValue = styled.p`
   font-family: monospace;
-  font-size: 16px;
-  line-height: 26px;
+  font-size: 14px;
+  line-height: 24px;
   font-weight: 500;
   text-align: right;
 `;
 
 export const CoinChange = styled.div<{ isPositive: boolean }>`
   font-family: monospace;
-  font-size: 14px;
+  font-size: 12px;
   color: ${props => (props.isPositive ? colors.success : colors.danger)};
   text-align: right;
 `;

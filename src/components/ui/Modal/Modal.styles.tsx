@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors } from 'constants/theme';
+import { colors, shadows } from 'constants/theme';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -18,12 +18,13 @@ export const Overlay = styled.div`
 export const ModalContent = styled.div`
   background-color: ${colors.background};
   border: 1px solid ${colors.border};
+  box-shadow: ${shadows.dark};
   padding: 20px;
   margin: 8px;
   border-radius: 4px;
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
-  bottom: 30%;
+  bottom: 20%;
   position: relative;
 `;
 
