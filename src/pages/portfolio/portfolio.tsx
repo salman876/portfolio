@@ -105,7 +105,7 @@ export const Portfolio: FC = () => {
         </SearchWrapper>
         <ButtonWrapper>
           <Button onClick={() => handleAssetManageClick('deposit')} isProcessing={dataQuery.isPending}>
-            Manage Hodlings
+            Manage Holdings
           </Button>
         </ButtonWrapper>
       </FlexWrapper>

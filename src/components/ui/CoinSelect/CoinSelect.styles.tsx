@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { colors, shadows, transitions } from 'constants/theme';
@@ -73,12 +74,14 @@ export const CoinValue = styled.p`
   text-align: right;
 `;
 
-export const CoinChange = styled.div<{ isPositive: boolean }>`
-  font-family: monospace;
-  font-size: 12px;
-  color: ${props => (props.isPositive ? colors.success : colors.danger)};
-  text-align: right;
-`;
+export const CoinChange = styled.div<{ isPositive: boolean }>(
+  ({ isPositive }) => css`
+    font-family: monospace;
+    font-size: 12px;
+    color: ${isPositive ? colors.success : colors.danger};
+    text-align: right;
+  `,
+);
 
 export const Chevron = styled.img`
   width: 16px;
