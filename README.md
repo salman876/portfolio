@@ -32,6 +32,37 @@ yarn preview
 
 ### run via Docker
 
+## Project structure
+The project follows a typical React application structure with some additional organization for better maintainability:
+
+```
+/
+├── public/               # Public assets
+│   ├── assets/           # Static assets (icons, fonts, etc.)
+├── src/
+│   ├── api/              # API services and data fetching
+│   ├── components/       # Reusable React components
+│   │   └── form/         # Form components derived from UI components for controlled inputs.
+│   │   └── ui/           # UI components (buttons, inputs, etc.)
+│   ├── constants/        # App constants
+│   ├── contexts/         # App contexts
+│   ├── enums/            # TypeScript enums definitions
+│   ├── pages/            # Page components
+│   ├── types/            # TypeScript type definitions
+│   ├── utils/            # Utility functions
+│   ├── App.tsx           # Main App component
+│   └── main.tsx          # Entry point
+├── .env                  # env vars
+├── .eslintrc.cjs         # ESLint configuration
+├── .prettierrc           # Prettier configuration
+├── tsconfig.json         # TypeScript configuration
+├── vite.config.ts        # Vite configuration
+├── vitest.config.ts      # Vitest configuration
+└── package.json          # Project dependencies and scripts
+```
+
+This structure separates concerns and makes it easy to locate and manage different parts of the application. The `components` directory contains reusable UI elements, while `pages` holds the main views. The `api` directory manages API interactions.
+
 ## Nice to haves
 - Sentry error reporting
 - GA4 analytics
