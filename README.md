@@ -102,6 +102,22 @@ This project uses a comprehensive set of ESLint plugins and rules to ensure code
 
 These rules and plugins help maintain code quality, prevent common errors, and enforce best practices in React and TypeScript development. It is something I have aquired over the years working with different teams and projects.
 
+## Prettier Configuration
+
+This project uses Prettier for consistent code formatting. Here's a breakdown of my Prettier configuration:
+
+- **plugins**: Uses `@trivago/prettier-plugin-sort-imports` for sorting imports.
+- **arrowParens**: Avoids parentheses around a sole arrow function parameter. Do not need them.
+- **printWidth**: Sets the line width to 120 characters.
+- **singleQuote**: Uses single quotes instead of double quotes.
+- **trailingComma**: Adds trailing commas wherever possible.
+- **semi**: Adds semicolons at the ends of statements. All great things must end with a `;`.
+- **importOrder**: Defines a specific order for import statements, grouped by type.
+- **importOrderSeparation**: Adds a newline between import groups.
+- **importOrderSortSpecifiers**: Alphabetically sorts import specifiers.
+
+I have got OCD for import orders as well as approprite new lines between import groups.
+
 ## Nice to haves
 - Sentry error reporting
 - GA4 analytics
