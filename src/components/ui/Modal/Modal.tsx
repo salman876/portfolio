@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useRef } from 'react';
 
-import { CloseButton, ModalContent, ModalHeader, Overlay, Title } from './Modal.styles';
+import { CloseButton, CloseIcon, ModalContent, ModalHeader, Overlay, Title } from './Modal.styles';
 
 interface ModalProps {
   isOpen: boolean;
@@ -43,7 +43,9 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
       <ModalContent ref={modalRef}>
         <ModalHeader>
           <Title>{title}</Title>
-          <CloseButton onClick={onClose}>&times;</CloseButton>
+          <CloseButton onClick={onClose}>
+            <CloseIcon src="/assets/icons/close.svg" alt="close" height={24} width={24} />
+          </CloseButton>
         </ModalHeader>
         {children}
       </ModalContent>

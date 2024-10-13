@@ -19,19 +19,24 @@ const TABS: { label: string; value: 'deposit' | 'withdrawal' }[] = [
 ];
 
 type AssetTabProps = {
-  type: 'deposit' | 'withdrawal';
   coins: Coin[];
+  type?: 'deposit' | 'withdrawal';
+  currentCoinId?: string;
   onCompleteCallback?: () => void;
 };
 
-export const AssetTabs: FC<AssetTabProps> = ({ type, coins, onCompleteCallback }) => {
+export const AssetTabs: FC<AssetTabProps> = ({ type = 'deposit', coins, currentCoinId, onCompleteCallback }) => {
   const [selectedTab, setSelectedTab] = useState(type);
 
   return (
     <>
       <Tabs tabs={TABS} selectedTab={selectedTab} onChange={tab => setSelectedTab(tab)} />
-      {selectedTab === 'deposit' && <AssetDeposit coins={coins} onCompleteCallback={onCompleteCallback} />}
-      {selectedTab === 'withdrawal' && <AssetWithdrawal coins={coins} onCompleteCallback={onCompleteCallback} />}
+      {selectedTab === 'deposit' && (
+        <AssetDeposit coins={coins} currentCoinId={currentCoinId} onCompleteCallback={onCompleteCallback} />
+      )}
+      {selectedTab === 'withdrawal' && (
+        <AssetWithdrawal coins={coins} currentCoinId={currentCoinId} onCompleteCallback={onCompleteCallback} />
+      )}
     </>
   );
 };

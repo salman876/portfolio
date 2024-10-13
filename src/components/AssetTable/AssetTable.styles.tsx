@@ -72,6 +72,16 @@ export const Icon = styled.img`
   margin-right: 16px;
 `;
 
+export const CoinName = styled.p`
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+export const CoinSymbol = styled.span`
+  font-size: 14px;
+  color: ${colors.primaryText}90;
+`;
+
 export const Property = styled.p`
   font-family: monospace;
   font-size: 16px;

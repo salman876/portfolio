@@ -2,8 +2,8 @@ import * as yup from 'yup';
 
 import { Coin } from 'types/coin';
 
-export const getAssetManagementSchema = (coins: Coin[]) => ({
-  coin: yup.mixed<Coin>().oneOf(coins).required('Required'),
+export const getAssetManagementSchema = () => ({
+  coin: yup.mixed<Coin>().required('Required'),
   holdAmount: yup.number().default(0),
   amount: yup
     .number()

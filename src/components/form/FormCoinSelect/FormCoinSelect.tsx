@@ -1,20 +1,13 @@
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 
-import { Coin } from 'types/coin';
-
-import { CoinSelect } from 'components/ui/CoinSelect';
+import { CoinSelect, CoinSelectProps } from 'components/ui/CoinSelect';
 
 interface FormCoinSelectProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
+> extends Omit<CoinSelectProps, 'onSelect'> {
   name: TName;
-  label?: string;
-  placeholder?: string;
-  helperText?: string;
-  isError?: boolean;
   control: Control<TFieldValues>;
-  options: Coin[];
 }
 
 export const FormCoinSelect = <
@@ -22,12 +15,7 @@ export const FormCoinSelect = <
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   name,
-  label,
-  placeholder,
-  helperText,
-  isError,
   control,
-  options,
   ...props
 }: FormCoinSelectProps<TFieldValues, TName>) => {
   const {
@@ -39,13 +27,10 @@ export const FormCoinSelect = <
   return (
     <CoinSelect
       {...props}
-      value={value}
-      label={label}
-      placeholder={placeholder}
-      coins={options}
+      initialCoin={value}
       onSelect={onChange}
-      helperText={errorMessage || helperText}
-      isError={Boolean(errorMessage) || isError}
+      helperText={errorMessage || props.helperText}
+      isError={Boolean(errorMessage) || props.isError}
     />
   );
 };

@@ -22,14 +22,20 @@ import { getAssetManagementSchema } from './utils/getAssetManagementSchema';
 
 type AssetDepositProps = {
   coins: Coin[];
+  currentCoinId?: string;
   onCompleteCallback?: () => void;
 };
 
-export const AssetDeposit: FC<AssetDepositProps> = ({ coins, onCompleteCallback }) => {
+export const AssetDeposit: FC<AssetDepositProps> = ({ coins, currentCoinId, onCompleteCallback }) => {
   const [storedAssets, setStoredAssets] = useAssetsContext();
 
-  const schema = useMemo(() => yup.object(getAssetManagementSchema(coins)).required(), [coins]);
+  const currentCoin = useMemo(() => {
+    if (!currentCoinId) return undefined;
 
+    return coins.find(coin => coin.id === currentCoinId);
+  }, [coins, currentCoinId]);
+
+  const schema = yup.object(getAssetManagementSchema()).required();
   const {
     handleSubmit,
     control,
@@ -38,7 +44,10 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, onCompleteCallback 
   } = useForm<yup.InferType<typeof schema>>({
     mode: 'onChange',
     resolver: yupResolver(schema),
-    defaultValues: schema.getDefault(),
+    defaultValues: {
+      coin: currentCoin || undefined,
+      amount: 0,
+    },
   });
 
   const [selectedCoin, amount] = watch(['coin', 'amount']);
@@ -78,7 +87,14 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, onCompleteCallback 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <FieldWrapper>
-        <FormCoinSelect name="coin" control={control} label="Select coin" placeholder="Select coin" options={coins} />
+        <FormCoinSelect
+          name="coin"
+          control={control}
+          initialCoin={selectedCoin}
+          label="Select coin"
+          placeholder="Select coin"
+          coins={coins}
+        />
       </FieldWrapper>
       <FieldWrapper>
         <FormTextField
@@ -108,7 +124,7 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, onCompleteCallback 
           </SummaryItem>
         </>
       )}
-      <Button type="submit" onClick={() => {}} isProcessing={isSubmitting} isDisabled={!isValid || !isDirty}>
+      <Button type="submit" isProcessing={isSubmitting} isDisabled={!isValid || !isDirty}>
         Confirm Deposit
       </Button>
     </form>

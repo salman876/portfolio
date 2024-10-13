@@ -10,7 +10,18 @@ import { Asset } from 'types/asset';
 
 import { formatUSD } from 'utils/formatUSD';
 
-import { Chevron, Icon, NameWrapper, Property, TBody, THead, Table, TableHeaderCell } from './AssetTable.styles';
+import {
+  Chevron,
+  CoinName,
+  CoinSymbol,
+  Icon,
+  NameWrapper,
+  Property,
+  TBody,
+  THead,
+  Table,
+  TableHeaderCell,
+} from './AssetTable.styles';
 
 const columnHelper = createColumnHelper<Asset>();
 
@@ -18,11 +29,14 @@ const columns = [
   columnHelper.accessor('name', {
     header: () => 'Asset',
     cell: ({ row }) => {
-      const { image, name } = row.original;
+      const { image, name, symbol } = row.original;
       return (
         <NameWrapper>
           <Icon src={image} alt={name} />
-          <Property>{name}</Property>
+          <div>
+            <CoinName>{name}</CoinName>
+            <CoinSymbol>{symbol.toUpperCase()}</CoinSymbol>
+          </div>
         </NameWrapper>
       );
     },
@@ -88,9 +102,9 @@ export const AssetTable = ({ assets, onRowClick }: AssetTableProps) => {
                   >
                     {flexRender(header.column.columnDef.header, header.getContext())}
                     {{
-                      asc: <Chevron src={'assets/icons/chevron-up.svg'} alt="Sort ascending" width="14" height="14" />,
+                      asc: <Chevron src={'/assets/icons/chevron-up.svg'} alt="Sort ascending" width="14" height="14" />,
                       desc: (
-                        <Chevron src={'assets/icons/chevron-down.svg'} alt="Sort descending" width="14" height="14" />
+                        <Chevron src={'/assets/icons/chevron-down.svg'} alt="Sort descending" width="14" height="14" />
                       ),
                     }[header.column.getIsSorted() as string] ?? null}
                   </TableHeaderCell>
