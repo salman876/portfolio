@@ -2,6 +2,8 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { AppRoute } from 'enums/routes';
+
 import { attachRequestCancellation } from 'utils/attachRequestCancellation';
 import { parseHtml } from 'utils/parseHtml';
 
@@ -9,11 +11,12 @@ import { fetchCoinDetails, fetchCoinMarkets } from 'api/coingecko';
 
 import { useAssetsContext } from 'contexts/assets';
 
+import { AssetCards } from 'components/AssetCards';
 import { AssetTabs } from 'components/AssetTabs';
 import { Error } from 'components/Error';
 
 import { AssetWrapper, BackButton, BackIcon, Description, Header, MainWrapper, Title } from './AssetDetails.styles';
-import { DescriptionSkeleton } from './Skeletons';
+import { DescriptionSkeleton, StatsSkeleton } from './Skeletons';
 
 export const AssetDetails: FC = () => {
   const [storedAssets] = useAssetsContext();
@@ -46,7 +49,10 @@ export const AssetDetails: FC = () => {
   if (!id) return <Error code={404} />;
 
   const asset = storedAssets.find(storedAsset => storedAsset.id === id);
-  if (!asset) return <Error code={404} />;
+  if (!asset) {
+    navigate(AppRoute.Portfolio, { replace: true });
+    return null;
+  }
 
   return (
     <>
@@ -58,11 +64,17 @@ export const AssetDetails: FC = () => {
       </Header>
       <MainWrapper>
         <div>
-          <h1>About</h1>
+          {coinDetailsQuery.data && <AssetCards coinDetails={coinDetailsQuery.data} asset={asset} />}
+          {coinDetailsQuery.isPending && <StatsSkeleton />}
+          <h2>About</h2>
           {coinDetailsQuery.isPending && <DescriptionSkeleton />}
           {coinDetailsQuery.data && <Description>{parseHtml(coinDetailsQuery.data.description)}</Description>}
         </div>
-        <AssetWrapper>{coinsQuery.data && <AssetTabs coins={coinsQuery.data} currentCoinId={asset.id} />}</AssetWrapper>
+        <div>
+          <AssetWrapper>
+            {coinsQuery.data && <AssetTabs coins={coinsQuery.data} currentCoinId={asset.id} />}
+          </AssetWrapper>
+        </div>
       </MainWrapper>
     </>
   );
