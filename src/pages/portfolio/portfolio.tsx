@@ -27,7 +27,7 @@ import {
   FlexWrapper,
   MainWrapper,
   SearchWrapper,
-} from './portfolio.styles';
+} from './Portfolio.styles';
 
 export const Portfolio: FC = () => {
   const navigate = useNavigate();
