@@ -67,9 +67,16 @@ This structure separates concerns and makes it easy to locate and manage differe
 
 This project uses a comprehensive set of ESLint plugins and rules to ensure code quality and consistency. Here's a brief explanation of the extends, plugins, and some key rules:
 
-### Extends
+### Plugins
 
-The `extends` array in our ESLint configuration incorporates several preset configurations:
+- `@typescript-eslint`: Provides TypeScript-specific linting rules.
+- `eslint-comments`: Adds rules for ESLint directive comments.
+- `react`: Adds React-specific linting rules.
+- `shopify-lean`: Includes Shopify's custom ESLint rules.
+- `jsx-a11y`: Checks accessibility rules on JSX elements.
+- `styled-components-a11y`: Provides accessibility rules for styled-components.
+
+### Extends
 
 - `'airbnb-typescript'`: Provides a robust set of rules based on Airbnb's JavaScript style guide, adapted for TypeScript.
 - `'plugin:@typescript-eslint/recommended'`: Adds recommended rules for TypeScript projects.
@@ -80,17 +87,6 @@ The `extends` array in our ESLint configuration incorporates several preset conf
 - `'plugin:jsx-a11y/recommended'`: Adds recommended accessibility rules for JSX.
 - `'plugin:styled-components-a11y/recommended'`: Provides accessibility rules for styled-components.
 - `'plugin:prettier/recommended'`: Integrates Prettier with ESLint, ensuring consistent code formatting.
-
-These extensions provide a solid foundation of rules and best practices for React and TypeScript development, accessibility, and code style.
-
-### Plugins
-
-- `@typescript-eslint`: Provides TypeScript-specific linting rules.
-- `eslint-comments`: Adds rules for ESLint directive comments.
-- `react`: Adds React-specific linting rules.
-- `shopify-lean`: Includes Shopify's custom ESLint rules.
-- `jsx-a11y`: Checks accessibility rules on JSX elements.
-- `styled-components-a11y`: Provides accessibility rules for styled-components.
 
 ### Key Rules
 
@@ -104,7 +100,7 @@ These extensions provide a solid foundation of rules and best practices for Reac
 - `"@typescript-eslint/no-unused-vars": "error"`: Reports unused variables.
 - `"@typescript-eslint/no-non-null-assertion": "error"`: Disallows non-null assertions using the ! postfix operator.
 
-These rules and plugins help maintain code quality, prevent common errors, and enforce best practices in React and TypeScript development.
+These rules and plugins help maintain code quality, prevent common errors, and enforce best practices in React and TypeScript development. It is something I have aquired over the years working with different teams and projects.
 
 ## Nice to haves
 - Sentry error reporting
