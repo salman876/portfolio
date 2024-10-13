@@ -93,6 +93,7 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, currentCoinId, onCo
           initialCoin={selectedCoin}
           label="Select coin"
           placeholder="Select coin"
+          notFoundText="Coin not found"
           coins={coins}
         />
       </FieldWrapper>

@@ -88,3 +88,12 @@ export const Chevron = styled.img`
   height: 16px;
   cursor: pointer;
 `;
+
+export const NotFoundText = styled.p`
+  font-size: 14px;
+  line-height: 26px;
+  text-align: center;
+  text-align: left;
+  padding: 16px;
+  font-weight: 600;
+`;

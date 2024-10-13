@@ -109,6 +109,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
           initialCoin={selectedCoin}
           label="Select coin"
           placeholder="Select coin"
+          notFoundText="Coin not found"
           coins={coins}
         />
       </FieldWrapper>
