@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { colors, shadows } from 'constants/theme';
+import { colors, shadows, transitions } from 'constants/theme';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -38,23 +38,32 @@ export const ModalHeader = styled.div`
 export const CloseButton = styled.button`
   background: none;
   appearance: none;
-  font-size: 24px;
   cursor: pointer;
-  color: ${colors.primary};
-  border: 1px solid ${colors.primary};
+  color: ${colors.white};
+  border: 1px solid ${colors.white};
   border-radius: 50%;
-  height: 32px;
-  width: 32px;
+  height: 40px;
+  width: 40px;
+  position: relative;
 
   :hover {
-    border-color: ${colors.primaryLight};
-    color: ${colors.primaryLight};
+    border-color: ${colors.borderActive};
+    color: ${colors.borderActive};
+    transition: ${transitions.fast};
   }
 
   :active {
-    border-color: ${colors.primaryLight};
-    color: ${colors.primaryLight};
+    border-color: ${colors.borderActive};
+    color: ${colors.borderActive};
+    transition: ${transitions.fast};
   }
+`;
+
+export const CloseIcon = styled.img`
+  display: block;
+  position: absolute;
+  top: 7px;
+  left: 7px;
 `;
 
 export const Title = styled.h2`

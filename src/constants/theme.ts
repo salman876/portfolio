@@ -4,6 +4,7 @@ export const breakpoints = {
 
 export const colors = {
   background: '#000',
+  white: '#FFF',
 
   border: '#FFFFFF21',
   borderDark: '#00000017',

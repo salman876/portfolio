@@ -1,5 +1,8 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { generatePath, useNavigate } from 'react-router-dom';
+
+import { AppRoute } from 'enums/routes';
 
 import { Asset } from 'types/asset';
 import { Coin } from 'types/coin';
@@ -24,9 +27,11 @@ import {
   FlexWrapper,
   MainWrapper,
   SearchWrapper,
-} from './portfolio.styles';
+} from './Portfolio.styles';
 
 export const Portfolio: FC = () => {
+  const navigate = useNavigate();
+
   const [storedAssets, setStoredAssets] = useAssetsContext();
 
   const [filteredAssets, setFilteredAssets] = useState<Asset[]>(storedAssets);
@@ -55,7 +60,9 @@ export const Portfolio: FC = () => {
     );
   };
 
-  const handleAssetClick = (asset: Asset) => console.log(asset.name);
+  const handleAssetClick = (asset: Asset) => {
+    navigate(generatePath(AppRoute.AssetDetails, { id: asset.id }));
+  };
 
   const handleAssetManageClick = (type: 'deposit' | 'withdrawal') => setAssetModal({ show: true, type });
 

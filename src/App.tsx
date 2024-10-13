@@ -6,7 +6,8 @@ import { AppRoute } from 'enums/routes';
 
 import { AssetsProvider } from 'contexts/assets';
 
-import { Portfolio } from 'pages/portfolio';
+import { AssetDetails } from 'pages/AssetDetails';
+import { Portfolio } from 'pages/Portfolio';
 
 import { BaseLayout } from 'components/BaseLayout';
 
@@ -19,6 +20,7 @@ export const App = () => {
         <BaseLayout>
           <Routes>
             <Route element={<Portfolio />} path={AppRoute.Portfolio} />
+            <Route element={<AssetDetails />} path={AppRoute.AssetDetails} />
           </Routes>
           <Toaster />
         </BaseLayout>

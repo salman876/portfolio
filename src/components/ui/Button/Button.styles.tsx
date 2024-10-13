@@ -16,6 +16,7 @@ export const CustomButton = styled.button<{ isDisabled?: boolean }>(
     cursor: pointer;
     padding: 8px 16px;
     margin: 0;
+    font-size: 14px;
     font-weight: 600;
 
     :hover {

@@ -23,18 +23,27 @@ import { getAssetManagementSchema } from './utils/getAssetManagementSchema';
 
 type AssetWithdrawalProps = {
   coins: Coin[];
+  currentCoinId?: string;
   onCompleteCallback?: () => void;
 };
 
-export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, onCompleteCallback }) => {
+export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId, onCompleteCallback }) => {
   const [storedAssets, setStoredAssets] = useAssetsContext();
 
   const assetCoins = useMemo(
     () => coins.filter(coin => storedAssets.some(asset => asset.id === coin.id)),
     [coins, storedAssets],
   );
-  const schema = useMemo(() => yup.object(getAssetManagementSchema(assetCoins)).required(), [assetCoins]);
 
+  // I assume I'll only get here from a coin that's in my asset.
+  // Meaning I am not viewing a coin here that I don't own.
+  const currentCoin = useMemo(() => {
+    if (!currentCoinId) return undefined;
+
+    return assetCoins.find(assetCoin => assetCoin.id === currentCoinId);
+  }, [assetCoins, currentCoinId]);
+
+  const schema = yup.object(getAssetManagementSchema()).required();
   const {
     handleSubmit,
     control,
@@ -44,7 +53,11 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, onCompleteCal
   } = useForm<yup.InferType<typeof schema>>({
     mode: 'onChange',
     resolver: yupResolver(schema),
-    defaultValues: schema.getDefault(),
+    defaultValues: {
+      coin: currentCoin || undefined,
+      holdAmount: 0,
+      amount: 0,
+    },
   });
 
   const [selectedCoin, amount] = watch(['coin', 'amount']);
@@ -93,10 +106,11 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, onCompleteCal
         <FormCoinSelect
           name="coin"
           control={control}
-          label="Select asset"
-          placeholder="Select asset"
+          initialCoin={selectedCoin}
+          label="Select coin"
+          placeholder="Select coin"
           notFoundText="Coin not found"
-          options={assetCoins}
+          coins={assetCoins}
         />
       </FieldWrapper>
       <FieldWrapper>
@@ -139,12 +153,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, onCompleteCal
           </SummaryItem>
         </>
       )}
-      <Button
-        type="submit"
-        onClick={() => {}}
-        isProcessing={isSubmitting}
-        isDisabled={!isValid || !isDirty || amount > holdAmount}
-      >
+      <Button type="submit" isProcessing={isSubmitting} isDisabled={!isValid || !isDirty || amount > holdAmount}>
         Confirm Withdrawal
       </Button>
     </form>

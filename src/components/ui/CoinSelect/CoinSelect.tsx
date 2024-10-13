@@ -20,11 +20,11 @@ import {
   Wrapper,
 } from './CoinSelect.styles';
 
-type CoinSelectProps = {
+export type CoinSelectProps = {
   coins: Coin[];
   label?: string;
   placeholder?: string;
-  value?: Coin;
+  initialCoin?: Coin;
   helperText?: string;
   notFoundText?: string;
   isError?: boolean;
@@ -35,14 +35,14 @@ export const CoinSelect: FC<CoinSelectProps> = ({
   coins,
   label,
   placeholder,
-  value,
+  initialCoin,
   helperText,
   notFoundText,
   isError,
   onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCoin, setSelectedCoin] = useState<Coin | undefined>(value);
+  const [selectedCoin, setSelectedCoin] = useState<Coin | undefined>(initialCoin);
   const [searchTerm, setSearchTerm] = useState(selectedCoin?.name || '');
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -62,7 +62,6 @@ export const CoinSelect: FC<CoinSelectProps> = ({
     setSelectedCoin(coin);
     setSearchTerm(coin.name);
     setIsOpen(false);
-    onSelect(coin);
   };
 
   useEffect(() => {
@@ -78,6 +77,10 @@ export const CoinSelect: FC<CoinSelectProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (selectedCoin) onSelect(selectedCoin);
+  }, [onSelect, selectedCoin]);
+
   return (
     <Wrapper ref={wrapperRef}>
       <TextField
@@ -91,7 +94,7 @@ export const CoinSelect: FC<CoinSelectProps> = ({
         isError={isError}
         postfix={
           <Chevron
-            src={isOpen ? 'assets/icons/chevron-up.svg' : 'assets/icons/chevron-down.svg'}
+            src={isOpen ? '/assets/icons/chevron-up.svg' : '/assets/icons/chevron-down.svg'}
             alt={isOpen ? 'Close dropdown' : 'Open dropdown'}
             onClick={() => setIsOpen(!isOpen)}
           />

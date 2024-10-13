@@ -22,7 +22,7 @@ const COINS = [
   },
 ];
 
-const schema = yup.object(getAssetManagementSchema(COINS)).required(),
+const schema = yup.object(getAssetManagementSchema()).required(),
   correctData = {
     coin: COINS[0],
     amount: 1,
@@ -40,22 +40,6 @@ describe(getAssetManagementSchema.name, () => {
 
   it('should fail when coin is empty', () => {
     expect(schema.isValidSync({ ...correctData, coin: undefined })).toBe(false);
-  });
-
-  it('should fail when coin is invalid', () => {
-    expect(
-      schema.isValidSync({
-        ...correctData,
-        coin: {
-          id: 'xx',
-          name: 'xx',
-          symbol: 'xx',
-          image: 'xx',
-          current_price: 123,
-          price_change_percentage_24h: 123,
-        },
-      }),
-    ).toBe(false);
   });
 
   it('should fail when amount is invalid', () => {
