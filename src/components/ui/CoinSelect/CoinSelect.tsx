@@ -16,6 +16,7 @@ import {
   CoinValue,
   DropdownItem,
   DropdownList,
+  NotFoundText,
   Wrapper,
 } from './CoinSelect.styles';
 
@@ -25,6 +26,7 @@ type CoinSelectProps = {
   placeholder?: string;
   value?: Coin;
   helperText?: string;
+  notFoundText?: string;
   isError?: boolean;
   onSelect: (coin: Coin) => void;
 };
@@ -35,6 +37,7 @@ export const CoinSelect: FC<CoinSelectProps> = ({
   placeholder,
   value,
   helperText,
+  notFoundText,
   isError,
   onSelect,
 }) => {
@@ -96,6 +99,7 @@ export const CoinSelect: FC<CoinSelectProps> = ({
       />
       {isOpen && (
         <DropdownList>
+          {!filteredCoins.length && notFoundText && <NotFoundText>{notFoundText}</NotFoundText>}
           {filteredCoins.map(coin => (
             <DropdownItem key={coin.id} onClick={() => handleCoinSelect(coin)}>
               <CoinInfo>
