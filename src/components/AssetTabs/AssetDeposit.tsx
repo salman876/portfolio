@@ -78,7 +78,14 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, onCompleteCallback 
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <FieldWrapper>
-        <FormCoinSelect name="coin" control={control} label="Select coin" placeholder="Select coin" options={coins} />
+        <FormCoinSelect
+          name="coin"
+          control={control}
+          label="Select coin"
+          placeholder="Select coin"
+          notFoundText="Coin not found"
+          options={coins}
+        />
       </FieldWrapper>
       <FieldWrapper>
         <FormTextField

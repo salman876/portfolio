@@ -12,6 +12,7 @@ interface FormCoinSelectProps<
   label?: string;
   placeholder?: string;
   helperText?: string;
+  notFoundText?: string;
   isError?: boolean;
   control: Control<TFieldValues>;
   options: Coin[];
@@ -25,6 +26,7 @@ export const FormCoinSelect = <
   label,
   placeholder,
   helperText,
+  notFoundText,
   isError,
   control,
   options,
@@ -42,6 +44,7 @@ export const FormCoinSelect = <
       value={value}
       label={label}
       placeholder={placeholder}
+      notFoundText={notFoundText}
       coins={options}
       onSelect={onChange}
       helperText={errorMessage || helperText}

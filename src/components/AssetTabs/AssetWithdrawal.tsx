@@ -95,6 +95,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, onCompleteCal
           control={control}
           label="Select asset"
           placeholder="Select asset"
+          notFoundText="Coin not found"
           options={assetCoins}
         />
       </FieldWrapper>
