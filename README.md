@@ -15,6 +15,7 @@ A pet project written in React Vite and Typescript.
 - comprehensive and picky eslint rules.
 - prettier with my flavor for sorting import orders.
 - CI/CD set up. CI goes through type checks, unused import checks, formats code, lints and run tests using Github Actions. CD goes to Github Pages.
+- Vite uses Rollup for its bundling. Added a Rollup config to set charts as a seprate chunk to reduce chunk size.
 
 ## Installation
 

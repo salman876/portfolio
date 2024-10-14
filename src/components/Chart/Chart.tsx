@@ -5,7 +5,7 @@ import { colors } from 'constants/theme';
 
 import { Tabs } from 'components/ui/Tabs';
 
-import { ChartMount, TabWrapper } from './Chart.styles';
+import { ChartMount, ChartWrapper, TabWrapper } from './Chart.styles';
 
 const DAY_RANGE_TABS: { label: string; value: number }[] = [
   {
@@ -86,7 +86,9 @@ export const Chart: FC<ChartProps> = ({ data, basePrice, currentDayRange, onDayR
 
   return (
     <>
-      <ChartMount ref={chartContainerRef} />
+      <ChartWrapper>
+        <ChartMount ref={chartContainerRef} />
+      </ChartWrapper>
       <TabWrapper>
         <Tabs tabs={DAY_RANGE_TABS} selectedTab={currentDayRange} onChange={onDayRangeChange} />
       </TabWrapper>

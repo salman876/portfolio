@@ -13,4 +13,13 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          charts: ['lightweight-charts'],
+        },
+      },
+    },
+  },
 });
