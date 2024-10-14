@@ -14,4 +14,4 @@ runs:
         cache: 'yarn'
     - name: Install modules
       shell: bash
-      run: yarn  install --frozen-lockfile
+      run: yarn  install
