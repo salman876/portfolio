@@ -11,7 +11,7 @@ COPY package.json yarn.lock ./
 COPY tsconfig.json tsconfig.node.json vite.config.ts ./
 
 # Install all dependencies
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 # Copy over source code files
 COPY public ./public
