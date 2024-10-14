@@ -75,6 +75,8 @@ export const Portfolio: FC = () => {
     retry: false,
     staleTime: 60 * 1000,
     refetchInterval: 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
   });
 
   const updateAssets = useCallback(

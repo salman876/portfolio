@@ -10,6 +10,7 @@ A pet project written in React Vite and Typescript.
 - Uses React Hook Form with yup validator for forms.
 - React dom router for routing.
 - react-hot-toast for toasts.
+- TradingView Lightweight chart for charting.
 - vitetest for unit tests. Also uses React testing library and jest-dom setup w/vitest for DOM tests.
 - comprehensive and picky eslint rules.
 - prettier with my flavor for sorting import orders.
@@ -29,8 +30,6 @@ To run a preview environment,
 ```sh
 yarn preview
 ```
-
-### run via Docker
 
 ## Project structure
 The project follows a typical React application structure with some additional organization for better maintainability:

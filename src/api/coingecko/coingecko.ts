@@ -1,8 +1,8 @@
 import axios, { CancelToken } from 'axios';
 
-import { Coin, CoinDetails } from 'types/coin';
+import { Coin, CoinChartHistory, CoinDetails } from 'types/coin';
 
-import { CoinData, CoinDetailsData } from './types';
+import { CoinChartHistoryData, CoinData, CoinDetailsData } from './types';
 
 const coingeckoApi = axios.create({
   baseURL: 'https://api.coingecko.com/api/v3',
@@ -61,6 +61,30 @@ export const fetchCoinDetails = async (cancelToken: CancelToken, coinId: string)
     };
   } catch (error) {
     console.error('Error fetching coin details:', error);
+    throw error;
+  }
+};
+
+export const fetchCoinChartHistory = async (
+  cancelToken: CancelToken,
+  coinId: string,
+  currency: string = 'usd',
+  precision: number = 2,
+  days: number = 1,
+): Promise<CoinChartHistory> => {
+  try {
+    const response = await coingeckoApi.get<CoinChartHistoryData>(`/coins/${coinId}/market_chart`, {
+      params: {
+        vs_currency: currency,
+        days: days,
+        precision: precision,
+      },
+      cancelToken,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching coin chart history:', error);
     throw error;
   }
 };

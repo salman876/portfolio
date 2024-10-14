@@ -1,12 +1,12 @@
 import { Tab, TabsContainer } from './Tabs.styles';
 
-interface TabsProps<Val extends string> {
-  tabs: { label: string; value: Val }[];
-  selectedTab: Val;
-  onChange: (tab: Val) => void;
+interface TabsProps<Value extends string | number> {
+  tabs: { label: string; value: Value }[];
+  selectedTab: Value;
+  onChange: (tab: Value) => void;
 }
 
-export const Tabs = <Val extends string>({ tabs, selectedTab, onChange }: TabsProps<Val>) => {
+export const Tabs = <Val extends string | number>({ tabs, selectedTab, onChange }: TabsProps<Val>) => {
   return (
     <TabsContainer>
       {tabs.map(tab => (
