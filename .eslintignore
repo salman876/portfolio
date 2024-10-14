@@ -4,3 +4,5 @@
 vite.config.ts
 vite.config.d.ts
 vitest.config.ts
+cypress.config.ts
+/cypress/*

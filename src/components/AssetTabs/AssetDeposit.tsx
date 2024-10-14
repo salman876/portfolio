@@ -95,6 +95,7 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, currentCoinId, onCo
           placeholder="Select coin"
           notFoundText="Coin not found"
           coins={coins}
+          data-testid="deposit"
         />
       </FieldWrapper>
       <FieldWrapper>
@@ -106,6 +107,7 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, currentCoinId, onCo
           placeholder={!selectedCoin ? 'Select coin first.' : '0'}
           type="number"
           postfix={<span>{selectedCoin?.symbol.toUpperCase()}</span>}
+          data-testid="deposit-amount"
         />
       </FieldWrapper>
       {selectedCoin && (
@@ -125,7 +127,7 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, currentCoinId, onCo
           </SummaryItem>
         </>
       )}
-      <Button type="submit" isProcessing={isSubmitting} isDisabled={!isValid || !isDirty}>
+      <Button type="submit" isProcessing={isSubmitting} isDisabled={!isValid || !isDirty} data-testid="deposit-submit">
         Confirm Deposit
       </Button>
     </form>

@@ -132,7 +132,11 @@ export const Portfolio: FC = () => {
           <TextField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
         </SearchWrapper>
         <ButtonWrapper>
-          <Button onClick={() => handleAssetManageClick('deposit')} isProcessing={dataQuery.isPending}>
+          <Button
+            onClick={() => handleAssetManageClick('deposit')}
+            isProcessing={dataQuery.isPending}
+            data-testid="manage-holdings"
+          >
             Manage Holdings
           </Button>
         </ButtonWrapper>
@@ -143,7 +147,7 @@ export const Portfolio: FC = () => {
         <p>No assets found.</p>
       )}
       {assetModal.show && dataQuery.data && (
-        <Modal isOpen onClose={handleAssetModalClose} title="Manage Holdings">
+        <Modal isOpen onClose={handleAssetModalClose} title="Manage Holdings" data-testid="manage-holdings">
           <AssetTabs
             type={'deposit'}
             coins={dataQuery.data}

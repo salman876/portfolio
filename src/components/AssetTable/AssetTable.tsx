@@ -81,7 +81,7 @@ export const AssetTable = ({ assets, onRowClick }: AssetTableProps) => {
   });
 
   return (
-    <Table cellSpacing="0">
+    <Table cellSpacing="0" data-testid="asset-table">
       <THead>
         {table.getHeaderGroups().map(headerGroup => (
           <tr key={headerGroup.id}>
@@ -135,6 +135,7 @@ export const AssetTable = ({ assets, onRowClick }: AssetTableProps) => {
                 onRowClick?.(row.original);
               }
             }}
+            data-testid={`${row.original.id}-asset-table-row`}
           >
             {row.getVisibleCells().map(cell => (
               <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>

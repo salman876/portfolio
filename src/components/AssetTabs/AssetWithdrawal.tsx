@@ -111,6 +111,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
           placeholder="Select coin"
           notFoundText="Coin not found"
           coins={assetCoins}
+          data-testid="withdrawal"
         />
       </FieldWrapper>
       <FieldWrapper>
@@ -122,6 +123,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
           value={holdAmount}
           type="number"
           postfix={<span>{selectedCoin?.symbol.toUpperCase()}</span>}
+          data-testid="hold-amount"
           disabled
         />
       </FieldWrapper>
@@ -134,6 +136,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
           placeholder={!selectedCoin ? 'Select asset first.' : '0'}
           type="number"
           postfix={<span>{selectedCoin?.symbol.toUpperCase()}</span>}
+          data-testid="withdrawal-amount"
         />
       </FieldWrapper>
       {selectedCoin && (
@@ -153,7 +156,12 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
           </SummaryItem>
         </>
       )}
-      <Button type="submit" isProcessing={isSubmitting} isDisabled={!isValid || !isDirty || amount > holdAmount}>
+      <Button
+        type="submit"
+        isProcessing={isSubmitting}
+        isDisabled={!isValid || !isDirty || amount > holdAmount}
+        data-testid="withdrawal-submit"
+      >
         Confirm Withdrawal
       </Button>
     </form>

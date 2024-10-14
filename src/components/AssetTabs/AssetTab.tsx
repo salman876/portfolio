@@ -30,7 +30,7 @@ export const AssetTabs: FC<AssetTabProps> = ({ type = 'deposit', coins, currentC
 
   return (
     <>
-      <Tabs tabs={TABS} selectedTab={selectedTab} onChange={tab => setSelectedTab(tab)} />
+      <Tabs tabs={TABS} selectedTab={selectedTab} onChange={tab => setSelectedTab(tab)} data-testid="asset" />
       {selectedTab === 'deposit' && (
         <AssetDeposit coins={coins} currentCoinId={currentCoinId} onCompleteCallback={onCompleteCallback} />
       )}
