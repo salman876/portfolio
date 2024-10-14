@@ -20,7 +20,11 @@ export const FlexWrapper = styled.div`
 
 export const BalanceAmount = styled.p`
   font-family: monospace;
-  font-size: 32px;
+  font-size: 24px;
+
+  ${breakpoints.medium} {
+    font-size: 32px;
+  }
 `;
 
 export const BalanceLabel = styled.p`

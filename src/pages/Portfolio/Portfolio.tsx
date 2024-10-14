@@ -1,6 +1,9 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 import { generatePath, useNavigate } from 'react-router-dom';
+
+import { colors } from 'constants/theme';
 
 import { AppRoute } from 'enums/routes';
 
@@ -94,6 +97,20 @@ export const Portfolio: FC = () => {
   useEffect(() => {
     if (dataQuery.status === 'success' && dataQuery.data) {
       updateAssets(dataQuery.data);
+    }
+
+    if (dataQuery.status === 'error') {
+      toast.error('Failed to get coin prices.', {
+        style: {
+          borderRadius: '4px',
+          background: colors.cardBackground,
+          color: colors.primaryText,
+          fontSize: '16px',
+          lineHeight: '26px',
+          fontWeight: '600',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+        },
+      });
     }
   }, [dataQuery.status, dataQuery.data, updateAssets]);
 

@@ -21,8 +21,12 @@ export const Table = styled.table`
 
 export const THead = styled.thead`
   tr {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 24px;
+
+    ${breakpoints.medium} {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -65,28 +69,46 @@ export const NameWrapper = styled.div`
 `;
 
 export const Icon = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: block;
   border-radius: 50%;
-  margin-right: 16px;
+  margin-right: 8px;
+
+  ${breakpoints.medium} {
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+  }
 `;
 
 export const CoinName = styled.p`
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
+
+  ${breakpoints.medium} {
+    font-size: 16px;
+  }
 `;
 
 export const CoinSymbol = styled.span`
-  font-size: 14px;
+  font-size: 12px;
   color: ${colors.primaryText}90;
+
+  ${breakpoints.medium} {
+    font-size: 12px;
+  }
 `;
 
 export const Property = styled.p`
   font-family: monospace;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 26px;
   text-align: center;
+
+  ${breakpoints.medium} {
+    font-size: 16px;
+  }
 `;
 
 export const Chevron = styled.img`

@@ -14,13 +14,11 @@ A pet project written in React Vite and Typescript.
 - vitetest for unit tests. Also uses React testing library and jest-dom setup w/vitest for DOM tests.
 - comprehensive and picky eslint rules.
 - prettier with my flavor for sorting import orders.
-- CI/CD set up. CI goes through type checks, unused import checks, formats code, lints and run tests using Github Actions. CD goes to Cloudflare Pages.
+- CI/CD set up. CI goes through type checks, unused import checks, formats code, lints and run tests using Github Actions. CD goes to Cloudflare Pages triggered when merged to `main`. I can roll back if needed.
 - Vite uses Rollup for its bundling. Added a Rollup config to set charts as a seprate chunk to reduce chunk size.
 - Dockerized app. Can be built on and run using docker.
 
 ## Running the app
-### Check out the app on hosted on Cloudflare pages
-You can check the app out on https://363148d3.portfolio-a3c.pages.dev/. CD is run whenever we merge to `main` which triggers deployment to CF pages.
 
 ### Run project locally
 To run a local dev server, clone project, install deps and run!
