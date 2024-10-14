@@ -1,4 +1,4 @@
-import { ColorType, IChartApi, Time, createChart } from 'lightweight-charts';
+import { ColorType, IChartApi, LastPriceAnimationMode, Time, createChart } from 'lightweight-charts';
 import { FC, useEffect, useRef } from 'react';
 
 import { colors } from 'constants/theme';
@@ -66,6 +66,7 @@ export const Chart: FC<ChartProps> = ({ data, basePrice, currentDayRange, onDayR
         bottomLineColor: 'rgba( 239, 83, 80, 1)',
         bottomFillColor1: 'rgba( 239, 83, 80, 0.05)',
         bottomFillColor2: 'rgba( 239, 83, 80, 0.28)',
+        lastPriceAnimation: LastPriceAnimationMode.Continuous,
       });
 
       const chartData = data.map(dataItem => ({
