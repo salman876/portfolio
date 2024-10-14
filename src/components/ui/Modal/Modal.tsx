@@ -7,9 +7,10 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   children: ReactNode;
+  'data-testid'?: string;
 }
 
-export const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+export const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children, 'data-testid': testId }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
 
   return (
     <Overlay>
-      <ModalContent ref={modalRef}>
+      <ModalContent ref={modalRef} data-testid={`${testId}-modal`}>
         <ModalHeader>
           <Title>{title}</Title>
           <CloseButton onClick={onClose}>

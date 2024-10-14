@@ -12,6 +12,7 @@ A pet project written in React Vite and Typescript.
 - react-hot-toast for toasts.
 - TradingView Lightweight chart for charting.
 - vitetest for unit tests. Also uses React testing library and jest-dom setup w/vitest for DOM tests.
+- Simple cypres e2e tests to deposit and withdraw assets.
 - comprehensive and picky eslint rules.
 - prettier with my flavor for sorting import orders.
 - CI/CD set up. CI goes through type checks, unused import checks, formats code, lints and run tests using Github Actions. CD goes to Cloudflare Pages triggered when merged to `main`. I can roll back if needed.
@@ -19,6 +20,9 @@ A pet project written in React Vite and Typescript.
 - Dockerized app. Can be built on and run using docker.
 
 ## Running the app
+
+### Cloudflare pages
+You can visit the app on [portfolio-a3c.pages.dev](https://portfolio-a3c.pages.dev/).
 
 ### Run project locally
 To run a local dev server, clone project, install deps and run!
@@ -56,6 +60,7 @@ The project follows a typical React application structure with some additional o
 
 ```
 /
+├── cypress/              # e2e testing
 ├── public/               # Public assets
 │   ├── assets/           # Static assets (icons, fonts, etc.)
 ├── src/
@@ -145,4 +150,3 @@ I have got OCD for import orders as well as approprite new lines between import 
 - Sentry error reporting
 - GA4 analytics
 - i18n with i18n-next
-- cypres e2e tests

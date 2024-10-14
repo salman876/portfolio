@@ -7,11 +7,25 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isDisabled?: boolean;
   isProcessing?: boolean;
   onClick?: () => void;
+  'data-testid'?: string;
 }
 
-export const Button: FC<ButtonProps> = ({ children, isDisabled, isProcessing, onClick, ...props }) => {
+export const Button: FC<ButtonProps> = ({
+  children,
+  isDisabled,
+  isProcessing,
+  onClick,
+  'data-testid': testId,
+  ...props
+}) => {
   return (
-    <CustomButton onClick={onClick} isDisabled={isDisabled} disabled={isDisabled} {...props}>
+    <CustomButton
+      onClick={onClick}
+      isDisabled={isDisabled}
+      disabled={isDisabled}
+      data-testid={`${testId}-button`}
+      {...props}
+    >
       {isProcessing ? <ButtonLoader src={'/assets/icons/loading.gif'} width="40" height="40" /> : children}
     </CustomButton>
   );

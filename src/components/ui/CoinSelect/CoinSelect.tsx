@@ -29,6 +29,7 @@ export type CoinSelectProps = {
   notFoundText?: string;
   isError?: boolean;
   onSelect: (coin: Coin) => void;
+  'data-testid'?: string;
 };
 
 export const CoinSelect: FC<CoinSelectProps> = ({
@@ -40,6 +41,7 @@ export const CoinSelect: FC<CoinSelectProps> = ({
   notFoundText,
   isError,
   onSelect,
+  'data-testid': testId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCoin, setSelectedCoin] = useState<Coin | undefined>(initialCoin);
@@ -99,12 +101,17 @@ export const CoinSelect: FC<CoinSelectProps> = ({
             onClick={() => setIsOpen(!isOpen)}
           />
         }
+        data-testid={`${testId}-coin-select`}
       />
       {isOpen && (
         <DropdownList>
           {!filteredCoins.length && notFoundText && <NotFoundText>{notFoundText}</NotFoundText>}
           {filteredCoins.map(coin => (
-            <DropdownItem key={coin.id} onClick={() => handleCoinSelect(coin)}>
+            <DropdownItem
+              key={coin.id}
+              onClick={() => handleCoinSelect(coin)}
+              data-testid={`${testId}-${coin.id}-coin-select-option`}
+            >
               <CoinInfo>
                 <CoinIcon src={coin.image} alt={coin.name} />
                 <div>
