@@ -5,9 +5,9 @@ import { Coin, CoinChartHistory, CoinDetails } from 'types/coin';
 import { CoinChartHistoryData, CoinData, CoinDetailsData } from './types';
 
 const coingeckoApi = axios.create({
-  baseURL: 'https://api.coingecko.com/api/v3',
+  baseURL: ' https://pro-api.coingecko.com/api/v3',
   headers: {
-    'x-cg-demo-api-key': import.meta.env.API_KEY_COIN_GECKO as string,
+    'x-cg-pro-api-key': import.meta.env.VITE_API_KEY_COIN_GECKO as string,
   },
 });
 
