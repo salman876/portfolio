@@ -14,12 +14,15 @@ A pet project written in React Vite and Typescript.
 - vitetest for unit tests. Also uses React testing library and jest-dom setup w/vitest for DOM tests.
 - comprehensive and picky eslint rules.
 - prettier with my flavor for sorting import orders.
-- CI/CD set up. CI goes through type checks, unused import checks, formats code, lints and run tests using Github Actions. CD goes to Github Pages.
+- CI/CD set up. CI goes through type checks, unused import checks, formats code, lints and run tests using Github Actions. CD goes to Cloudflare Pages.
 - Vite uses Rollup for its bundling. Added a Rollup config to set charts as a seprate chunk to reduce chunk size.
-- Dockerized app. Can be built and run using docker.
+- Dockerized app. Can be built on and run using docker.
 
-## Installation
+## Running the app
+### Check out the app on hosted on Cloudflare pages
+You can check the app out on https://363148d3.portfolio-a3c.pages.dev/. CD is run whenever we merge to `main` which triggers deployment to CF pages.
 
+### Run project locally
 To run a local dev server, clone project, install deps and run!
 
 ```sh
@@ -27,13 +30,14 @@ yarn install
 yarn dev
 ```
 
-To run a preview environment, which is a prod build with a prod runtime.
+To run a preview environment, which is a prod build with a prod runtime in a local server. Make sure the app is built first.
 
 ```sh
+yarn build
 yarn preview
 ```
 
-## Run using Docker
+### Run using Docker
 
 You can run this app on docker. The app uses nginx to serve assets and log request or access logs.
 
@@ -46,6 +50,7 @@ docker run -p 3000:3000 portfolio
 ```
 
 you can visit the app on port 3000, http://localhost:3000/
+
 
 ## Project structure
 
@@ -142,3 +147,4 @@ I have got OCD for import orders as well as approprite new lines between import 
 - Sentry error reporting
 - GA4 analytics
 - i18n with i18n-next
+- cypres e2e tests
