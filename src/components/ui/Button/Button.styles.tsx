@@ -7,6 +7,7 @@ export const CustomButton = styled.button<{ isDisabled?: boolean }>(
   ({ isDisabled }) => css`
     width: 100%;
     height: 60px;
+    color: ${colors.white};
     background: ${colors.primary};
     text-decoration: none;
     appearance: none;

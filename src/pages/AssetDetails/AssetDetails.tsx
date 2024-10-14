@@ -1,6 +1,9 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { colors } from 'constants/theme';
 
 import { AppRoute } from 'enums/routes';
 
@@ -66,6 +69,22 @@ export const AssetDetails: FC = () => {
     refetchIntervalInBackground: false,
     enabled: Boolean(id),
   });
+
+  useEffect(() => {
+    if ([coinsQuery.status, coinDetailsQuery.status, coinChartQuery.status].includes('error')) {
+      toast.error('Failed to get coin details.', {
+        style: {
+          borderRadius: '4px',
+          background: colors.cardBackground,
+          color: colors.primaryText,
+          fontSize: '16px',
+          lineHeight: '26px',
+          fontWeight: '600',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+        },
+      });
+    }
+  }, [coinChartQuery.status, coinDetailsQuery.status, coinsQuery.status]);
 
   useChangePageTitle(id || '');
 

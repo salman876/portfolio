@@ -22,6 +22,7 @@ export const Tab = styled.button<{ isActive?: boolean }>(
     outline: none;
     border: none;
     height: 40px;
+    color: ${colors.white};
     background: ${colors.cardBackground};
     font-size: 14px;
     line-height: 26px;
