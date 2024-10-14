@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "rm -rf dist && tsc -b && vite build",
+    "build-cf": "vite build",
     "checktypes": "tsc --noEmit",
     "checkimports": "ts-unused-exports tsconfig.json",
     "format": "prettier -w src/**/*.{js,ts,jsx,tsx} -c --no-error-on-unmatched-pattern",
