@@ -6,7 +6,7 @@ A pet project written in React Vite and Typescript.
 
 - Uses emotion and styled components to make up the design.
 - Uses Tanstack's React Query (uses axios for data fetching).
-- Uses Tanstack's React Table for table sorting and pagination. 
+- Uses Tanstack's React Table for table sorting and pagination.
 - Uses React Hook Form with yup validator for forms.
 - React dom router for routing.
 - react-hot-toast for toasts.
@@ -16,6 +16,7 @@ A pet project written in React Vite and Typescript.
 - prettier with my flavor for sorting import orders.
 - CI/CD set up. CI goes through type checks, unused import checks, formats code, lints and run tests using Github Actions. CD goes to Github Pages.
 - Vite uses Rollup for its bundling. Added a Rollup config to set charts as a seprate chunk to reduce chunk size.
+- Dockerized app. Can be built and run using docker.
 
 ## Installation
 
@@ -26,13 +27,28 @@ yarn install
 yarn dev
 ```
 
-To run a preview environment,
+To run a preview environment, which is a prod build with a prod runtime.
 
 ```sh
 yarn preview
 ```
 
+## Run using Docker
+
+You can run this app on docker. The app uses nginx to serve assets and log request or access logs.
+
+```sh
+// build the app
+docker build -t portfolio .
+
+// run the app
+docker run -p 3000:3000 portfolio
+```
+
+you can visit the app on port 3000, http://localhost:3000/
+
 ## Project structure
+
 The project follows a typical React application structure with some additional organization for better maintainability:
 
 ```
@@ -59,6 +75,8 @@ The project follows a typical React application structure with some additional o
 ├── vite.config.ts        # Vite configuration
 ├── vitest.config.ts      # Vitest configuration
 └── package.json          # Project dependencies and scripts
+└── Dockerfile            # Dockerfile to build and run the app.
+└── nginx.conf            # nginx server configuration. The dockerized app will use this server config log requests, access logs and more.
 ```
 
 This structure separates concerns and makes it easy to locate and manage different parts of the application. The `components` directory contains reusable UI elements, while `pages` holds the main views. The `api` directory manages API interactions.
@@ -119,6 +137,7 @@ This project uses Prettier for consistent code formatting. Here's a breakdown of
 I have got OCD for import orders as well as approprite new lines between import groups.
 
 ## Nice to haves
+
 - Sentry error reporting
 - GA4 analytics
 - i18n with i18n-next
