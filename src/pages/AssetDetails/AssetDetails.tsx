@@ -99,7 +99,13 @@ export const AssetDetails: FC = () => {
           {coinDetailsQuery.isPending && <StatsSkeleton />}
           <h2>About</h2>
           {coinDetailsQuery.isPending && <DescriptionSkeleton />}
-          {coinDetailsQuery.data && <Description>{parseHtml(coinDetailsQuery.data.description)}</Description>}
+          {coinDetailsQuery.data && (
+            <Description>
+              {coinDetailsQuery.data.description
+                ? parseHtml(coinDetailsQuery.data.description)
+                : 'No description is present at the moment.'}
+            </Description>
+          )}
         </div>
         <div>
           <AssetWrapper>
