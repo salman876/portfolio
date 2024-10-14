@@ -7,7 +7,7 @@ import { AppRoute } from 'enums/routes';
 import { AssetsProvider } from 'contexts/assets';
 
 import { AssetDetails } from 'pages/AssetDetails';
-import { Xy } from 'pages/xy';
+import { Portfolio } from 'pages/Portfolio';
 
 import { BaseLayout } from 'components/BaseLayout';
 
@@ -19,7 +19,7 @@ export const App = () => {
       <QueryClientProvider client={queryClient}>
         <BaseLayout>
           <Routes>
-            <Route element={<Xy />} path={AppRoute.Portfolio} />
+            <Route element={<Portfolio />} path={AppRoute.Portfolio} />
             <Route element={<AssetDetails />} path={AppRoute.AssetDetails} />
           </Routes>
           <Toaster />

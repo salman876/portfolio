@@ -20,9 +20,16 @@ import { Button } from 'components/ui/Button';
 import { Modal } from 'components/ui/Modal';
 import { TextField } from 'components/ui/TextField';
 
-import { BalanceAmount, BalanceLabel, ButtonWrapper, FlexWrapper, MainWrapper, SearchWrapper } from './xy.styles';
+import {
+  BalanceAmount,
+  BalanceLabel,
+  ButtonWrapper,
+  FlexWrapper,
+  MainWrapper,
+  SearchWrapper,
+} from './Portfolio.styles';
 
-export const Xy: FC = () => {
+export const Portfolio: FC = () => {
   const navigate = useNavigate();
 
   const [storedAssets, setStoredAssets] = useAssetsContext();
