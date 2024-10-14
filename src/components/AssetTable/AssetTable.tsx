@@ -70,6 +70,14 @@ export const AssetTable = ({ assets, onRowClick }: AssetTableProps) => {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      sorting: [
+        {
+          id: 'value',
+          desc: true,
+        },
+      ],
+    },
   });
 
   return (

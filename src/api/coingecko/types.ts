@@ -52,3 +52,7 @@ export type CoinDetailsData = {
     price_change_percentage_1y: number;
   };
 };
+
+export type CoinChartHistoryData = {
+  prices: [number, number][];
+};

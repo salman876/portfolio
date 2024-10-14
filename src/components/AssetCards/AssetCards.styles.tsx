@@ -64,12 +64,13 @@ export const PriceContainer = styled.div`
 
 export const Price = styled.span`
   font-size: 20px;
-  font-weight: bold;
+  font-family: monospace;
 `;
 
 export const PriceChange = styled.span<{ isPositive: boolean }>(
   ({ isPositive }) => css`
     font-size: 14px;
+    font-family: monospace;
     color: ${isPositive ? colors.success : colors.danger};
   `,
 );

@@ -7,6 +7,7 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  margin-bottom: 20px;
   background: ${colors.background};
 `;
 
@@ -48,6 +49,7 @@ export const Title = styled.h1`
 export const MainWrapper = styled.div`
   display: grid;
   grid-template-columns: auto;
+  padding-bottom: 64px;
   gap: 40px;
 
   ${breakpoints.medium} {
@@ -60,6 +62,8 @@ export const AssetWrapper = styled.div`
   border-radius: 4px;
   padding: 32px;
   box-shadow: ${shadows.dark};
+  position: sticky;
+  top: 20px;
 `;
 
 export const Description = styled.div`
