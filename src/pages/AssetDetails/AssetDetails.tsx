@@ -11,6 +11,8 @@ import { fetchCoinChartHistory, fetchCoinDetails, fetchCoinMarkets } from 'api/c
 
 import { useAssetsContext } from 'contexts/assets';
 
+import { useChangePageTitle } from 'hooks/useChangePageTitle';
+
 import { AssetCards } from 'components/AssetCards';
 import { AssetTabs } from 'components/AssetTabs';
 import { Chart } from 'components/Chart';
@@ -65,10 +67,13 @@ export const AssetDetails: FC = () => {
     enabled: Boolean(id),
   });
 
+  useChangePageTitle(id || '');
+
   if (!id) return <Error code={404} />;
 
   const asset = storedAssets.find(storedAsset => storedAsset.id === id);
   if (!asset) {
+    // I assume if you no longer have the asset anymore, I take you back to the Porfolio page.
     navigate(AppRoute.Portfolio, { replace: true });
     return null;
   }

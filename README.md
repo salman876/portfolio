@@ -63,6 +63,7 @@ The project follows a typical React application structure with some additional o
 │   ├── constants/        # App constants
 │   ├── contexts/         # App contexts
 │   ├── enums/            # TypeScript enums definitions
+│   ├── hooks/            # Resuable custom hooks
 │   ├── pages/            # Page components
 │   ├── types/            # TypeScript type definitions
 │   ├── utils/            # Utility functions
