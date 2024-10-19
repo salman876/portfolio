@@ -27,6 +27,7 @@ export const FormCoinSelect = <
   return (
     <CoinSelect
       {...props}
+      name={name}
       initialCoin={value}
       onSelect={onChange}
       helperText={errorMessage || props.helperText}

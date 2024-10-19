@@ -129,7 +129,7 @@ export const Portfolio: FC = () => {
       </FlexWrapper>
       <FlexWrapper>
         <SearchWrapper>
-          <TextField placeholder="Search" onChange={e => handleSearch(e.target.value)} />
+          <TextField placeholder="Search assets" id="searchAssets" onChange={e => handleSearch(e.target.value)} />
         </SearchWrapper>
         <ButtonWrapper>
           <Button

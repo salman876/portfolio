@@ -88,6 +88,7 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, currentCoinId, onCo
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <FieldWrapper>
         <FormCoinSelect
+          id="coin"
           name="coin"
           control={control}
           initialCoin={selectedCoin}
@@ -100,6 +101,7 @@ export const AssetDeposit: FC<AssetDepositProps> = ({ coins, currentCoinId, onCo
       </FieldWrapper>
       <FieldWrapper>
         <FormTextField
+          id="amount"
           name="amount"
           control={control}
           label="Amount"

@@ -104,6 +104,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <FieldWrapper>
         <FormCoinSelect
+          id="coin"
           name="coin"
           control={control}
           initialCoin={selectedCoin}
@@ -116,6 +117,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
       </FieldWrapper>
       <FieldWrapper>
         <FormTextField
+          id="holdAmount"
           name="holdAmount"
           control={control}
           label="Hodling Amount"
@@ -129,6 +131,7 @@ export const AssetWithdrawal: FC<AssetWithdrawalProps> = ({ coins, currentCoinId
       </FieldWrapper>
       <FieldWrapper>
         <FormTextField
+          id="amount"
           name="amount"
           control={control}
           label="Amount"
