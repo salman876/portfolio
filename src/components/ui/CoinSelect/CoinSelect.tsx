@@ -21,6 +21,8 @@ import {
 } from './CoinSelect.styles';
 
 export type CoinSelectProps = {
+  id: string;
+  name: string;
   coins: Coin[];
   label?: string;
   placeholder?: string;
@@ -33,6 +35,8 @@ export type CoinSelectProps = {
 };
 
 export const CoinSelect: FC<CoinSelectProps> = ({
+  id,
+  name,
   coins,
   label,
   placeholder,
@@ -86,6 +90,8 @@ export const CoinSelect: FC<CoinSelectProps> = ({
   return (
     <Wrapper ref={wrapperRef}>
       <TextField
+        id={id}
+        name={name}
         autoComplete="coins"
         label={label}
         placeholder={placeholder}
