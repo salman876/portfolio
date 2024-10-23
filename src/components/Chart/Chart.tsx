@@ -1,4 +1,4 @@
-import { ColorType, IChartApi, LastPriceAnimationMode, Time, createChart } from 'lightweight-charts';
+import { ColorType, IChartApi, ISeriesApi, LastPriceAnimationMode, Time, createChart } from 'lightweight-charts';
 import { FC, useEffect, useRef } from 'react';
 
 import { colors } from 'constants/theme';
@@ -22,6 +22,28 @@ const DAY_RANGE_TABS: { label: string; value: number }[] = [
   },
 ];
 
+const chartOptions = {
+  height: 480,
+  autoSize: true,
+  handleScroll: true,
+  handleScale: true,
+  layout: {
+    textColor: 'white',
+    background: { type: ColorType.VerticalGradient, color: colors.cardBackground },
+  },
+  grid: {
+    vertLines: {
+      visible: false,
+    },
+    horzLines: {
+      visible: false,
+    },
+  },
+  timeScale: {
+    timeVisible: true,
+  },
+};
+
 type ChartProps = {
   basePrice: number;
   data: [number, number][];
@@ -32,34 +54,14 @@ type ChartProps = {
 export const Chart: FC<ChartProps> = ({ data, basePrice, currentDayRange, onDayRangeChange }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const series = useRef<ISeriesApi<'Baseline'> | null>(null);
 
+  // handle chart
   useEffect(() => {
     if (chartContainerRef.current) {
-      const chartOptions = {
-        height: 480,
-        autoSize: true,
-        handleScroll: true,
-        handleScale: true,
-        layout: {
-          textColor: 'white',
-          background: { type: ColorType.VerticalGradient, color: colors.cardBackground },
-        },
-        grid: {
-          vertLines: {
-            visible: false,
-          },
-          horzLines: {
-            visible: false,
-          },
-        },
-        timeScale: {
-          timeVisible: true,
-        },
-      };
       chartRef.current = createChart(chartContainerRef.current, chartOptions);
 
-      const baselineSeries = chartRef.current.addBaselineSeries({
-        baseValue: { type: 'price', price: basePrice },
+      series.current = chartRef.current.addBaselineSeries({
         topLineColor: 'rgba( 38, 166, 154, 1)',
         topFillColor1: 'rgba( 38, 166, 154, 0.28)',
         topFillColor2: 'rgba( 38, 166, 154, 0.05)',
@@ -68,14 +70,6 @@ export const Chart: FC<ChartProps> = ({ data, basePrice, currentDayRange, onDayR
         bottomFillColor2: 'rgba( 239, 83, 80, 0.28)',
         lastPriceAnimation: LastPriceAnimationMode.Continuous,
       });
-
-      const chartData = data.map(dataItem => ({
-        value: dataItem[1],
-        time: Math.floor(dataItem[0] / 1000) as Time,
-      }));
-
-      baselineSeries.setData(chartData);
-      chartRef.current.timeScale().fitContent();
     }
 
     return () => {
@@ -83,7 +77,29 @@ export const Chart: FC<ChartProps> = ({ data, basePrice, currentDayRange, onDayR
         chartRef.current.remove();
       }
     };
-  }, [basePrice, data]);
+  }, []);
+
+  // Handle base price
+  useEffect(() => {
+    if (!series.current) return;
+
+    series.current.applyOptions({
+      baseValue: { type: 'price', price: basePrice },
+    });
+  }, [basePrice]);
+
+  // Handle chart data
+  useEffect(() => {
+    if (!chartRef.current || !series.current) return;
+
+    const chartData = data.map(dataItem => ({
+      value: dataItem[1],
+      time: Math.floor(dataItem[0] / 1000) as Time,
+    }));
+
+    series.current.setData(chartData);
+    chartRef.current.timeScale().fitContent();
+  }, [data]);
 
   return (
     <>
