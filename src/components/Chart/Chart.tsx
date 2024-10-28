@@ -79,15 +79,6 @@ export const Chart: FC<ChartProps> = ({ data, basePrice, currentDayRange, onDayR
     };
   }, []);
 
-  // Handle base price
-  useEffect(() => {
-    if (!series.current) return;
-
-    series.current.applyOptions({
-      baseValue: { type: 'price', price: basePrice },
-    });
-  }, [basePrice]);
-
   // Handle chart data
   useEffect(() => {
     if (!chartRef.current || !series.current) return;
@@ -97,9 +88,15 @@ export const Chart: FC<ChartProps> = ({ data, basePrice, currentDayRange, onDayR
       time: Math.floor(dataItem[0] / 1000) as Time,
     }));
 
+    // basePrice usually only changes when data changes
+    series.current.applyOptions({
+      baseValue: { type: 'price', price: basePrice },
+    });
+
     series.current.setData(chartData);
+
     chartRef.current.timeScale().fitContent();
-  }, [data]);
+  }, [basePrice, data]);
 
   return (
     <>
