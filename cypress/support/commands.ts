@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 Cypress.Commands.add('depositAsset', (asset: string, amount: string) => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();

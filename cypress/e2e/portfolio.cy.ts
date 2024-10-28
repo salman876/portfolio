@@ -7,7 +7,7 @@ describe('Porfolio page', () => {
 
 describe('Deposit an asset', () => {
   it('Should wait for API to load before clicking button', () => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();
@@ -15,7 +15,7 @@ describe('Deposit an asset', () => {
   });
 
   it('Sould error on invalid amount', () => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();
@@ -27,7 +27,7 @@ describe('Deposit an asset', () => {
   });
 
   it('Sould deposit asset', () => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();
@@ -47,18 +47,18 @@ describe('Withdraw an asset', () => {
   });
 
   it('Should not find asset if attempting to withdraw an asset you do not have', () => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();
     cy.get('div[data-testid="manage-holdings-modal"]').should('be.visible');
     cy.get('button[data-testid="asset-withdrawal-tab"]').click();
-    cy.get('input[data-testid="withdraw-coin-select-textfield"]').clear().type('tether');
+    cy.get('input[data-testid="withdrawal-coin-select-textfield"]').clear().type('tether');
     cy.contains('p', 'Coin not found');
   });
 
   it('Should not allow withdrawal of maount greater than hold amount', () => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();
@@ -72,7 +72,7 @@ describe('Withdraw an asset', () => {
   });
 
   it('Should not allow withdrawal of maount greater than hold amount', () => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();
@@ -86,7 +86,7 @@ describe('Withdraw an asset', () => {
   });
 
   it('Should withdraw the asset', () => {
-    cy.intercept('GET', 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
+    cy.intercept('GET', 'https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd').as('apiCall');
     cy.visit('/');
     cy.wait('@apiCall');
     cy.get('button[data-testid="manage-holdings-button"]').click();
